@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <!-- SEO Meta Tags -->
+  <title>Parthasarathi Financial Services — AMFI Registered Mutual Fund Distributor (ARN-185973)</title>
+  <meta name="description" content="Build wealth through disciplined Mutual Fund SIPs, ELSS Tax Saving, Retirement Planning, and Goal-Based Financial Advisory with Parthasarathi Financial Services (ARN-185973)." />
+  <meta name="keywords" content="Mutual Fund Distributor, MFD, ARN-185973, Parthasarathi Financial Services, Parthasarathi Panda, SIP Calculator, Wealth Management, AMFI Registered, Tax Saving ELSS, Financial Advisor, Investment Portfolio" />
+  <meta name="author" content="Parthasarathi Financial Services" />
+
+  <!-- Open Graph / WhatsApp / Social Media Link Preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Parthasarathi Financial Services — AMFI Registered Mutual Fund Distributor (ARN-185973)" />
+  <meta property="og:description" content="Plan your financial freedom with expert Mutual Fund guidance, interactive SIP calculators, and personalized goal planning." />
+  <meta property="og:image" content="parthasarathi-panda.jpg" />
+
+  <!-- Google Fonts & CDN Libraries -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       0. ULTRA-MODERN WEALTH COMPOUNDING PRELOADER SCREEN
+       ========================================================================== -->
+  <div id="preloader">
+    <div class="preloader-content">
+      <div class="preloader-wealth-ring">
+        <div class="preloader-wealth-icon">
+          <i class="bi bi-graph-up-arrow"></i>
+        </div>
+        <svg viewBox="0 0 100 100" class="preloader-svg-ring">
+          <defs>
+            <linearGradient id="wealthGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00e676" />
+              <stop offset="50%" stop-color="#00f2fe" />
+              <stop offset="100%" stop-color="#ffd700" />
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="44" class="preloader-ring-bg"></circle>
+          <circle cx="50" cy="50" r="44" class="preloader-ring-fill" id="preloader-ring" stroke="url(#wealthGradient)"></circle>
+        </svg>
+      </div>
+      
+      <div class="preloader-text-box">
+        <h3 class="preloader-brand">PARTHASARATHI</h3>
+        <span class="preloader-subbrand">FINANCIAL SERVICES</span>
+        <p class="preloader-subtitle"><span class="live-pulse-dot"></span> AMFI Registered MFD (ARN-185973)</p>
+      </div>
+
+      <div class="preloader-progress-area">
+        <div class="preloader-status-row">
+          <span class="preloader-step-text" id="preloader-step">Initializing Wealth Engine...</span>
+          <span class="preloader-pct" id="preloader-pct">0%</span>
+        </div>
+        <div class="preloader-bar-box">
+          <div class="preloader-bar-fill" id="preloader-bar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ambient Glowing Background Orbs -->
+  <div class="ambient-glow orb-1"></div>
+  <div class="ambient-glow orb-2"></div>
+
+  <!-- Floating 1-Click WhatsApp Speed Dial Button -->
+  <a href="https://wa.me/917609952853?text=Hi%20Parthasarathi,%20I%20want%20to%20know%20more%20about%20starting%20a%20Mutual%20Fund%20SIP." target="_blank" class="floating-whatsapp-dial" title="Direct WhatsApp Consultation">
+    <i class="bi bi-whatsapp"></i>
+    <span>Chat with Parthasarathi</span>
+  </a>
+
+  <!-- ==========================================================================
+       1. DESKTOP & LAPTOP NAVIGATION BAR
+       ========================================================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#hero" class="brand-logo">
+        <div class="brand-icon">
+          <i class="bi bi-graph-up-arrow"></i>
+        </div>
+        <div class="brand-text-wrapper">
+          <div class="brand-title-group">
+            <span class="brand-main-title">PARTHASARATHI</span>
+            <span class="brand-sub-heading">FINANCIAL SERVICES</span>
+          </div>
+          <span class="brand-badge"><span class="live-pulse-dot"></span> ARN-185973</span>
+        </div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#calculators" class="nav-link">Calculators</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn btn-primary open-booking-modal-btn btn-nav-cta">
+          <i class="bi bi-calendar-event"></i> <span>Book Advisory</span>
+        </button>
+        <button class="hamburger-menu-btn" id="hamburger-menu-btn" aria-label="Toggle Mobile Menu">
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       1.1 MOBILE FULL NAVIGATION DRAWER OVERLAY (< 768px Devices)
+       ========================================================================== -->
+  <div class="mobile-drawer-overlay" id="mobile-drawer-overlay">
+    <div class="mobile-drawer-content">
+      <div class="mobile-drawer-header">
+        <div class="brand-title-group">
+          <span class="brand-main-title">PARTHASARATHI</span>
+          <span class="brand-sub-heading">FINANCIAL SERVICES</span>
+        </div>
+        <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close Menu">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <ul class="mobile-drawer-links">
+        <li><a href="#hero" class="drawer-link"><i class="bi bi-house-door-fill text-primary"></i> Home</a></li>
+        <li><a href="#calculators" class="drawer-link"><i class="bi bi-calculator-fill text-cyan"></i> Financial Calculators</a></li>
+        <li><a href="#quiz" class="drawer-link"><i class="bi bi-heart-pulse-fill text-rose"></i> Health Scorecard</a></li>
+        <li><a href="#myths-facts" class="drawer-link"><i class="bi bi-lightbulb-fill text-amber"></i> Myths vs Facts</a></li>
+        <li><a href="#journey" class="drawer-link"><i class="bi bi-map-fill text-secondary"></i> Wealth Journey</a></li>
+        <li><a href="#services" class="drawer-link"><i class="bi bi-briefcase-fill text-primary"></i> Solutions & Services</a></li>
+        <li><a href="#about" class="drawer-link"><i class="bi bi-person-badge-fill text-cyan"></i> About Founder</a></li>
+        <li><a href="#testimonials" class="drawer-link"><i class="bi bi-chat-square-quote-fill text-amber"></i> Client Reviews</a></li>
+      </ul>
+      <div class="mobile-drawer-footer">
+        <button class="btn btn-primary open-booking-modal-btn" style="width: 100%;">
+          <i class="bi bi-calendar-event"></i> Book Free Consultation
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       2. MOBILE BOTTOM NAVIGATION TAB BAR (< 768px Devices)
+       ========================================================================== -->
+  <div class="mobile-bottom-nav">
+    <div class="mobile-nav-items">
+      <a href="#hero" class="mobile-nav-item active">
+        <i class="bi bi-house-door-fill"></i>
+        <span>Home</span>
+      </a>
+      <a href="#calculators" class="mobile-nav-item">
+        <i class="bi bi-calculator-fill"></i>
+        <span>Calc</span>
+      </a>
+      <a href="#quiz" class="mobile-nav-item">
+        <i class="bi bi-heart-pulse-fill"></i>
+        <span>Score</span>
+      </a>
+      <a href="#services" class="mobile-nav-item">
+        <i class="bi bi-briefcase-fill"></i>
+        <span>Services</span>
+      </a>
+      <a href="#journey" class="mobile-nav-item">
+        <i class="bi bi-map-fill"></i>
+        <span>Journey</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       3. HERO SECTION
+       ========================================================================== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content reveal-on-scroll">
+          <div class="hero-badge">
+            <span class="live-pulse-dot"></span> AMFI Registered MFD (ARN-185973)
+          </div>
+          <h1 class="hero-title">
+            Smart Mutual Fund Planning for Your <span class="gradient-text">Financial Freedom</span>
+          </h1>
+          <p class="hero-subtitle">
+            Empowering individuals and families to build long-term wealth through disciplined Systematic Investment Plans (SIPs), tax-saving ELSS funds, and goal-directed portfolio management with <strong>Parthasarathi Panda</strong>.
+          </p>
+          <div class="hero-cta-group">
+            <button class="btn btn-primary open-booking-modal-btn">
+              <i class="bi bi-chat-quote-fill"></i> Start Free Consultation
+            </button>
+            <a href="https://wa.me/917609952853?text=Hi%20Parthasarathi,%20I%20want%20to%20know%20more%20about%20starting%20a%20Mutual%20Fund%20SIP." target="_blank" class="btn btn-whatsapp">
+              <i class="bi bi-whatsapp"></i> Chat on WhatsApp
+            </a>
+          </div>
+
+          <!-- 1-Click WhatsApp Smart Goal Quick Selector -->
+          <div class="hero-smart-goals">
+            <span class="smart-goals-title"><i class="bi bi-lightning-charge-fill text-amber"></i> Quick Goal Consultation:</span>
+            <div class="smart-goals-chips">
+              <a href="https://wa.me/917609952853?text=Hi%20Parthasarathi,%20I%20want%20to%20plan%20a%20SIP%20for%20my%20Child's%20Higher%20Education." target="_blank" class="goal-chip">
+                🎓 Child Education
+              </a>
+              <a href="https://wa.me/917609952853?text=Hi%20Parthasarathi,%20I%20want%20to%20save%20tax%20under%20Section%2080C%20with%20ELSS." target="_blank" class="goal-chip">
+                🛡️ Save Tax 80C
+              </a>
+              <a href="https://wa.me/917609952853?text=Hi%20Parthasarathi,%20I%20want%20to%20plan%20for%20my%20Retirement%20Corpus%20and%20Monthly%20SWP." target="_blank" class="goal-chip">
+                🏖️ Early Retirement
+              </a>
+              <a href="https://wa.me/917609952853?text=Hi%20Parthasarathi,%20I%20want%20to%20create%20long-term%20wealth%20through%20Equity%20SIP." target="_blank" class="goal-chip">
+                🚀 Wealth Creation
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-stats-row">
+            <div class="stat-item">
+              <h3 class="counter-number" data-target="15" data-prefix="₹" data-suffix="+ Cr">₹15+ Cr</h3>
+              <p>AUM Managed</p>
+            </div>
+            <div class="stat-item">
+              <h3 class="counter-number" data-target="18" data-prefix="₹" data-suffix="+ Lakhs">₹18+ Lakhs</h3>
+              <p>Monthly SIP Book</p>
+            </div>
+            <div class="stat-item">
+              <h3 class="counter-number" data-target="400" data-suffix="+">400+</h3>
+              <p>Satisfied Clients</p>
+            </div>
+            <div class="stat-item">
+              <h3 class="counter-number" data-target="6" data-suffix="+ Yrs">6+ Yrs</h3>
+              <p>Financial Expertise</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Card Preview Visual -->
+        <div class="hero-visual reveal-on-scroll">
+          <div class="glass-card hero-visual-card">
+            <div class="hero-card-header">
+              <span class="hero-card-title"><i class="bi bi-graph-up text-secondary"></i> Wealth Compounding Projection</span>
+              <span class="badge bg-secondary" style="font-size: 0.75rem; padding: 4px 10px; border-radius: 12px; background: rgba(16,185,129,0.15); color: var(--secondary);">+14.2% CAGR</span>
+            </div>
+            <div class="hero-chart-container">
+              <canvas id="heroChart"></canvas>
+            </div>
+            <div class="hero-feature-pills">
+              <span class="feature-pill"><i class="bi bi-check-circle-fill text-secondary"></i> Zero Advisory Fee</span>
+              <span class="feature-pill"><i class="bi bi-check-circle-fill text-secondary"></i> Goal Tracking</span>
+              <span class="feature-pill"><i class="bi bi-check-circle-fill text-secondary"></i> 100% Digital Onboarding</span>
+            </div>
+
+            <!-- Floating Badge -->
+            <div class="amfi-badge-card">
+              <div class="amfi-icon">
+                <i class="bi bi-award-fill"></i>
+              </div>
+              <div>
+                <h4 style="font-size: 0.9rem;">AMFI Registered MFD</h4>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">ARN-185973 (AMFI Validated)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Client Milestone Marquee Ticker -->
+  <div class="ticker-wrapper">
+    <div class="ticker-track">
+      <div class="ticker-item"><i class="bi bi-check-circle-fill"></i> ⭐ ₹15+ Cr Mutual Fund AUM Under Active Management</div>
+      <div class="ticker-item"><i class="bi bi-check-circle-fill"></i> 💼 ₹18+ Lakhs Monthly SIP Book Executed Every Month</div>
+      <div class="ticker-item"><i class="bi bi-check-circle-fill"></i> 🤝 400+ Active Family Portfolios Managed by Parthasarathi</div>
+      <div class="ticker-item"><i class="bi bi-check-circle-fill"></i> 🛡️ 100% SEBI Regulated & Direct Bank Transactions</div>
+      <!-- Duplicate for infinite marquee loop -->
+      <div class="ticker-item"><i class="bi bi-check-circle-fill"></i> ⭐ ₹15+ Cr Mutual Fund AUM Under Active Management</div>
+      <div class="ticker-item"><i class="bi bi-check-circle-fill"></i> 💼 ₹18+ Lakhs Monthly SIP Book Executed Every Month</div>
+      <div class="ticker-item"><i class="bi bi-check-circle-fill"></i> 🤝 400+ Active Family Portfolios Managed by Parthasarathi</div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       4. INTERACTIVE FINANCIAL CALCULATORS SECTION
+       ========================================================================== -->
+  <section class="section" id="calculators">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="bi bi-calculator"></i> Wealth Planning Tools</span>
+        <h2 class="section-title">Calculate Your <span class="gradient-text">Growth & SIP Goals</span></h2>
+        <p class="section-subtitle">Visualize how small, disciplined monthly investments compound into massive wealth over time.</p>
+      </div>
+
+      <div class="calculators-wrapper reveal-on-scroll">
+        <div class="calc-tabs">
+          <button class="calc-tab-btn active" data-calc="sip"><i class="bi bi-arrow-repeat"></i> Monthly SIP Calculator</button>
+          <button class="calc-tab-btn" data-calc="lumpsum"><i class="bi bi-cash-stack"></i> Lumpsum Calculator</button>
+          <button class="calc-tab-btn" data-calc="goal"><i class="bi bi-trophy"></i> Target Goal Planner</button>
+        </div>
+
+        <div class="glass-card calc-content-card">
+          <!-- Input Controls -->
+          <div class="calc-inputs">
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label" id="label-amount">Monthly SIP Investment (₹)</label>
+                <span class="calc-value-badge" id="badge-amount">₹10,000</span>
+              </div>
+              <input type="range" class="custom-range" id="calc-amount" min="500" max="100000" step="500" value="10000" />
+            </div>
+
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label">Expected Annual Return Rate (% p.a.)</label>
+                <span class="calc-value-badge" id="badge-rate">12%</span>
+              </div>
+              <input type="range" class="custom-range" id="calc-rate" min="5" max="25" step="0.5" value="12" />
+            </div>
+
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label">Investment Time Horizon (Years)</label>
+                <span class="calc-value-badge" id="badge-years">10 Years</span>
+              </div>
+              <input type="range" class="custom-range" id="calc-years" min="1" max="35" step="1" value="10" />
+            </div>
+
+            <!-- Advanced Step-Up SIP & Inflation Controls -->
+            <div class="form-group" id="stepup-group">
+              <div class="form-label-row">
+                <label class="form-label"><i class="bi bi-graph-up-arrow text-secondary"></i> Annual Step-Up SIP (% Top-up)</label>
+                <span class="calc-value-badge" id="badge-stepup">10% p.a.</span>
+              </div>
+              <input type="range" class="custom-range" id="calc-stepup" min="0" max="25" step="1" value="10" />
+            </div>
+
+            <div class="form-group inflation-toggle-box">
+              <label class="toggle-switch">
+                <input type="checkbox" id="calc-inflation" />
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label"><i class="bi bi-shield-shaded text-amber"></i> Adjust for Inflation (6% p.a. Purchasing Power)</span>
+            </div>
+
+            <button class="btn btn-primary open-booking-modal-btn" style="margin-top: 12px;">
+              <i class="bi bi-rocket-takeoff"></i> Start This Investment Plan
+            </button>
+          </div>
+
+          <!-- Dynamic Output Results & Chart -->
+          <div class="calc-results-panel">
+            <div class="calc-chart-box">
+              <canvas id="calcChart"></canvas>
+            </div>
+            
+            <div class="calc-metrics-grid">
+              <div class="metric-card">
+                <p class="metric-label" id="metric-invested-label">Total Invested Amount</p>
+                <p class="metric-val" id="metric-invested-val">₹12,00,000</p>
+              </div>
+              <div class="metric-card">
+                <p class="metric-label">Estimated Wealth Gain</p>
+                <p class="metric-val" id="metric-returns-val" style="color: var(--secondary);">₹11,23,391</p>
+              </div>
+              <div class="metric-card highlight" style="grid-column: span 2;">
+                <p class="metric-label" id="metric-total-label">Expected Future Corpus Value</p>
+                <p class="metric-val" id="metric-total-val">₹23,23,391</p>
+                <p class="metric-subtext" id="metric-stepup-diff" style="font-size: 0.8rem; color: var(--secondary); margin-top: 4px; display: block;">
+                  <i class="bi bi-lightning-fill"></i> Step-Up SIP adds +₹14,50,000 Extra Wealth!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       4.1 UNIQUE FEATURE: INTERACTIVE INVESTOR RISK & ASSET ALLOCATION QUIZ
+       ========================================================================== -->
+  <section class="section" id="quiz">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="bi bi-heart-pulse-fill"></i> Interactive Scorecard</span>
+        <h2 class="section-title">Check Your <span class="gradient-text">Financial Health Score</span></h2>
+        <p class="section-subtitle">Answer 4 quick questions to get your instant Financial Health Score out of 100 & custom asset plan.</p>
+      </div>
+
+      <div class="glass-card quiz-card reveal-on-scroll">
+        <form id="quiz-form">
+          <div class="quiz-step" id="quiz-step-1">
+            <h4 class="quiz-question-title"><i class="bi bi-1-circle-fill text-primary"></i> What is your primary investment goal?</h4>
+            <div class="quiz-options-grid">
+              <label class="quiz-option-card">
+                <input type="radio" name="goal" value="wealth" checked />
+                <div class="option-box">
+                  <i class="bi bi-graph-up-arrow"></i>
+                  <span>Long-Term Wealth Creation</span>
+                </div>
+              </label>
+              <label class="quiz-option-card">
+                <input type="radio" name="goal" value="tax" />
+                <div class="option-box">
+                  <i class="bi bi-shield-check"></i>
+                  <span>Save Tax under 80C (ELSS)</span>
+                </div>
+              </label>
+              <label class="quiz-option-card">
+                <input type="radio" name="goal" value="child" />
+                <div class="option-box">
+                  <i class="bi bi-mortarboard"></i>
+                  <span>Children's Higher Education</span>
+                </div>
+              </label>
+              <label class="quiz-option-card">
+                <input type="radio" name="goal" value="retirement" />
+                <div class="option-box">
+                  <i class="bi bi-sunset"></i>
+                  <span>Retirement Pension (SWP)</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="quiz-step" id="quiz-step-2" style="margin-top: 20px;">
+            <h4 class="quiz-question-title"><i class="bi bi-2-circle-fill text-primary"></i> Do you have an Emergency Savings Fund?</h4>
+            <div class="quiz-options-grid">
+              <label class="quiz-option-card">
+                <input type="radio" name="emergency" value="high" checked />
+                <div class="option-box"><span>Yes, 6+ Months Expenses Saved</span></div>
+              </label>
+              <label class="quiz-option-card">
+                <input type="radio" name="emergency" value="med" />
+                <div class="option-box"><span>Partial (1 to 3 Months)</span></div>
+              </label>
+              <label class="quiz-option-card">
+                <input type="radio" name="emergency" value="low" />
+                <div class="option-box"><span>No Emergency Fund Yet</span></div>
+              </label>
+            </div>
+          </div>
+
+          <div class="quiz-step" id="quiz-step-3" style="margin-top: 20px;">
+            <h4 class="quiz-question-title"><i class="bi bi-3-circle-fill text-primary"></i> Do you have Term & Health Insurance?</h4>
+            <div class="quiz-options-grid">
+              <label class="quiz-option-card">
+                <input type="radio" name="insurance" value="full" checked />
+                <div class="option-box"><span>Both Term & Health Covered</span></div>
+              </label>
+              <label class="quiz-option-card">
+                <input type="radio" name="insurance" value="partial" />
+                <div class="option-box"><span>Only Corporate Health Insurance</span></div>
+              </label>
+              <label class="quiz-option-card">
+                <input type="radio" name="insurance" value="none" />
+                <div class="option-box"><span>No Separate Insurance</span></div>
+              </label>
+            </div>
+          </div>
+
+          <div class="quiz-step" id="quiz-step-4" style="margin-top: 20px;">
+            <h4 class="quiz-question-title"><i class="bi bi-4-circle-fill text-primary"></i> How long can you stay invested?</h4>
+            <div class="quiz-options-grid">
+              <label class="quiz-option-card">
+                <input type="radio" name="horizon" value="short" />
+                <div class="option-box"><span>1 to 3 Years</span></div>
+              </label>
+              <label class="quiz-option-card">
+                <input type="radio" name="horizon" value="medium" />
+                <div class="option-box"><span>3 to 5 Years</span></div>
+              </label>
+              <label class="quiz-option-card">
+                <input type="radio" name="horizon" value="long" checked />
+                <div class="option-box"><span>5 to 10+ Years</span></div>
+              </label>
+            </div>
+          </div>
+
+          <button type="button" id="get-quiz-result-btn" class="btn btn-primary" style="margin-top: 24px; width: 100%;">
+            <i class="bi bi-speedometer2"></i> Calculate My Financial Health Score
+          </button>
+        </form>
+
+        <!-- Quiz Output Scorecard & Allocation Box -->
+        <div id="quiz-result-box" class="quiz-result-box" style="display: none; margin-top: 28px;">
+          <div class="scorecard-header">
+            <div class="score-circle">
+              <svg viewBox="0 0 100 100" class="score-svg">
+                <circle cx="50" cy="50" r="42" class="score-bg-ring"></circle>
+                <circle cx="50" cy="50" r="42" class="score-fill-ring" id="score-ring-fill"></circle>
+              </svg>
+              <div class="score-text-inner">
+                <span id="score-num">85</span>
+                <small>/100</small>
+              </div>
+            </div>
+            <div>
+              <span class="badge" id="score-badge" style="background: rgba(16,185,129,0.2); color: var(--secondary); font-size: 0.85rem; padding: 4px 12px; border-radius: 12px;">Financial Health: Excellent</span>
+              <h3 id="quiz-result-title" class="gradient-text" style="font-size: 1.3rem; margin-top: 6px; margin-bottom: 4px;">Recommended Strategy: Aggressive Growth Portfolio</h3>
+              <p id="quiz-result-desc" style="color: var(--text-muted); font-size: 0.9rem;">Strong emergency foundation. You are ready to compound wealth aggressively via Equity SIPs.</p>
+            </div>
+          </div>
+
+          <div class="quiz-bars" style="margin-top: 20px;">
+            <div class="quiz-bar-row">
+              <span>Equity Mutual Funds</span>
+              <span id="quiz-eq-val">70%</span>
+            </div>
+            <div class="quiz-bar-bg"><div class="quiz-bar-fill" id="quiz-eq-bar" style="width: 70%; background: var(--primary);"></div></div>
+
+            <div class="quiz-bar-row" style="margin-top: 10px;">
+              <span>Flexi-Cap & Mid-Cap Funds</span>
+              <span id="quiz-flex-val">20%</span>
+            </div>
+            <div class="quiz-bar-bg"><div class="quiz-bar-fill" id="quiz-flex-bar" style="width: 20%; background: var(--accent-cyan);"></div></div>
+
+            <div class="quiz-bar-row" style="margin-top: 10px;">
+              <span>Debt & Liquid Safety Reserve</span>
+              <span id="quiz-debt-val">10%</span>
+            </div>
+            <div class="quiz-bar-bg"><div class="quiz-bar-fill" id="quiz-debt-bar" style="width: 10%; background: var(--secondary);"></div></div>
+          </div>
+
+          <a id="quiz-wa-btn" href="https://wa.me/917609952853?text=Hi%20Parthasarathi,%20I%20completed%20the%20Financial%20Health%20Scorecard%20on%20your%20website%20and%20got%20a%20score%20of%2085/100.%20I%20want%20to%20start%20my%20Mutual%20Fund%20SIP." target="_blank" class="btn btn-whatsapp" style="margin-top: 20px; width: 100%;">
+            <i class="bi bi-whatsapp"></i> Discuss Score & Plan Strategy with Parthasarathi
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       4.2 UNIQUE FEATURE: SIP vs TRADITIONAL FD/GOLD COMPARISON MATRIX
+       ========================================================================== -->
+  <section class="section" id="compare">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="bi bi-bar-chart-steps"></i> Wealth Comparison</span>
+        <h2 class="section-title">SIP vs. <span class="gradient-text">Traditional Investments</span></h2>
+        <p class="section-subtitle">See how Equity SIP compares against traditional Bank FDs and Gold over a 10-year horizon.</p>
+      </div>
+
+      <div class="comparison-grid reveal-on-scroll">
+        <div class="glass-card compare-card">
+          <div class="compare-icon"><i class="bi bi-bank text-dim"></i></div>
+          <h4>Savings Bank Account</h4>
+          <h3 class="compare-rate">~3.5% p.a.</h3>
+          <p class="compare-verdict text-danger"><i class="bi bi-arrow-down-right"></i> Loses purchasing power to 6% inflation</p>
+          <div class="compare-growth-box">
+            <span>₹10K/mo after 10 Yrs:</span>
+            <strong>₹14.3 Lakhs</strong>
+          </div>
+        </div>
+
+        <div class="glass-card compare-card">
+          <div class="compare-icon"><i class="bi bi-safe text-amber"></i></div>
+          <h4>Bank Fixed Deposit (FD)</h4>
+          <h3 class="compare-rate">~6.5% p.a.</h3>
+          <p class="compare-verdict text-amber"><i class="bi bi-dash"></i> Fully taxable as per income slab</p>
+          <div class="compare-growth-box">
+            <span>₹10K/mo after 10 Yrs:</span>
+            <strong>₹16.8 Lakhs</strong>
+          </div>
+        </div>
+
+        <div class="glass-card compare-card highlight-compare">
+          <div class="compare-icon"><i class="bi bi-rocket-takeoff text-secondary"></i></div>
+          <h4>Equity SIP (Parthasarathi MFD)</h4>
+          <h3 class="compare-rate" style="color: var(--secondary);">~14.2% CAGR</h3>
+          <p class="compare-verdict text-secondary"><i class="bi bi-graph-up-arrow"></i> Beats inflation & builds true wealth</p>
+          <div class="compare-growth-box" style="background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.3);">
+            <span>₹10K/mo after 10 Yrs:</span>
+            <strong style="color: var(--secondary); font-size: 1.3rem;">₹25.2 Lakhs!</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ==========================================================================
+       4.4 UNIQUE FEATURE: INTERACTIVE 3D MYTHS VS FACTS FLIP CARDS
+       ========================================================================== -->
+  <section class="section" id="myths-facts">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="bi bi-lightbulb"></i> Investor Awareness</span>
+        <h2 class="section-title">Mutual Funds <span class="gradient-text">Myths vs. Facts</span></h2>
+        <p class="section-subtitle">Hover or tap cards to shatter common financial misconceptions and see the truth.</p>
+      </div>
+
+      <div class="myths-grid reveal-on-scroll">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="myth-card-face myth-card-front">
+              <div class="myth-badge">MYTH #1</div>
+              <i class="bi bi-cash-stack myth-icon text-danger"></i>
+              <h3>"You need lakhs of rupees to invest in Mutual Funds."</h3>
+              <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover/Tap to reveal Fact</span>
+            </div>
+            <div class="myth-card-face myth-card-back">
+              <div class="fact-badge">FACT</div>
+              <i class="bi bi-check-circle-fill fact-icon text-secondary"></i>
+              <h3>Start with just ₹500/month!</h3>
+              <p>Systematic Investment Plans (SIP) make wealth creation accessible to every budget with small, disciplined monthly deposits.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="myth-card-face myth-card-front">
+              <div class="myth-badge">MYTH #2</div>
+              <i class="bi bi-exclamation-triangle myth-icon text-danger"></i>
+              <h3>"Mutual Funds are risky and completely unregulated."</h3>
+              <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover/Tap to reveal Fact</span>
+            </div>
+            <div class="myth-card-face myth-card-back">
+              <div class="fact-badge">FACT</div>
+              <i class="bi bi-shield-check fact-icon text-secondary"></i>
+              <h3>100% Regulated by SEBI & AMFI</h3>
+              <p>Your money is held securely by custodian banks. Money transfers go directly between your bank and the Asset Management Company.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="myth-card-face myth-card-front">
+              <div class="myth-badge">MYTH #3</div>
+              <i class="bi bi-lock myth-icon text-danger"></i>
+              <h3>"My money gets locked in with zero liquidity."</h3>
+              <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover/Tap to reveal Fact</span>
+            </div>
+            <div class="myth-card-face myth-card-back">
+              <div class="fact-badge">FACT</div>
+              <i class="bi bi-lightning-charge fact-icon text-secondary"></i>
+              <h3>24-Hour Digital Withdrawals</h3>
+              <p>Open-ended mutual funds allow you to redeem money online anytime, credited directly to your bank account within 1-3 business days.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="myth-card-face myth-card-front">
+              <div class="myth-badge">MYTH #4</div>
+              <i class="bi bi-stopwatch myth-icon text-danger"></i>
+              <h3>"You must time the stock market to get good returns."</h3>
+              <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover/Tap to reveal Fact</span>
+            </div>
+            <div class="myth-card-face myth-card-back">
+              <div class="fact-badge">FACT</div>
+              <i class="bi bi-graph-up-arrow fact-icon text-secondary"></i>
+              <h3>Time IN the Market > Timing the Market</h3>
+              <p>SIP Rupee Cost Averaging automatically buys more units during market dips and compounds wealth when markets recover.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       4.5 UNIQUE FEATURE: 5-STEP CLIENT WEALTH JOURNEY TIMELINE
+       ========================================================================== -->
+  <section class="section" id="journey">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="bi bi-map"></i> How It Works</span>
+        <h2 class="section-title">Your 5-Step <span class="gradient-text">Wealth Journey</span></h2>
+        <p class="section-subtitle">How Parthasarathi Panda guides you from initial consultation to financial independence.</p>
+      </div>
+
+      <div class="timeline-wrapper reveal-on-scroll">
+        <div class="timeline-track"></div>
+
+        <div class="timeline-step">
+          <div class="timeline-node">1</div>
+          <div class="glass-card timeline-card">
+            <div class="timeline-icon"><i class="bi bi-chat-quote text-primary"></i></div>
+            <h4>Step 1: Goal & Risk Discovery</h4>
+            <p>1-on-1 discussion to map out your short-term emergency needs, tax-saving goals, and long-term family aspirations.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-node">2</div>
+          <div class="glass-card timeline-card">
+            <div class="timeline-icon"><i class="bi bi-pie-chart text-secondary"></i></div>
+            <h4>Step 2: Custom Multi-AMC Portfolio</h4>
+            <p>Curating a personalized asset allocation across top-rated equity, debt, and hybrid mutual fund schemes.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-node">3</div>
+          <div class="glass-card timeline-card">
+            <div class="timeline-icon"><i class="bi bi-phone-vibrate text-cyan"></i></div>
+            <h4>Step 3: 100% Digital Onboarding</h4>
+            <p>Paperless e-KYC and instant mandate setup in under 5 minutes right from your smartphone.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-node">4</div>
+          <div class="glass-card timeline-card">
+            <div class="timeline-icon"><i class="bi bi-arrow-repeat text-amber"></i></div>
+            <h4>Step 4: Automated SIP Compounding</h4>
+            <p>Automatic monthly debits on your preferred salary date ensuring disciplined wealth creation without stress.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="timeline-node">5</div>
+          <div class="glass-card timeline-card">
+            <div class="timeline-icon"><i class="bi bi-trophy text-rose"></i></div>
+            <h4>Step 5: Annual Review & Rebalancing</h4>
+            <p>Regular portfolio checkups, performance tracking, and annual rebalancing to keep your goals strictly on target.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="journey-cta reveal-on-scroll" style="text-align: center; margin-top: 36px;">
+        <button class="btn btn-primary open-booking-modal-btn">
+          <i class="bi bi-rocket-takeoff-fill"></i> Start Step 1: Free Advisory Call
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       5. SERVICES SHOWCASE SECTION
+       ========================================================================== -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="bi bi-briefcase"></i> Solutions Offered</span>
+        <h2 class="section-title">Comprehensive <span class="gradient-text">Financial Solutions</span></h2>
+        <p class="section-subtitle">Tailored mutual fund distributor services aligned precisely with your life goals.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="glass-card service-card reveal-on-scroll">
+          <div class="service-icon-box">
+            <i class="bi bi-piggy-bank"></i>
+          </div>
+          <h3 class="service-title">Systematic Investment Plans (SIP)</h3>
+          <p class="service-desc">Start small with monthly automated investments across top-performing Equity, Hybrid, and Debt funds to harness the magic of compounding.</p>
+          <ul class="service-features-list">
+            <li><i class="bi bi-check2"></i> Rupee Cost Averaging</li>
+            <li><i class="bi bi-check2"></i> Auto Step-up SIP Options</li>
+            <li><i class="bi bi-check2"></i> Flexibility to Pause/Modify</li>
+          </ul>
+        </div>
+
+        <div class="glass-card service-card reveal-on-scroll">
+          <div class="service-icon-box" style="color: var(--secondary);">
+            <i class="bi bi-shield-lock"></i>
+          </div>
+          <h3 class="service-title">ELSS Tax Saving Funds</h3>
+          <p class="service-desc">Save tax under Section 80C up to ₹1,50,000 while building inflation-beating equity wealth with the shortest 3-year lock-in period.</p>
+          <ul class="service-features-list">
+            <li><i class="bi bi-check2"></i> Lowest Lock-in vs PPF/FD</li>
+            <li><i class="bi bi-check2"></i> Dual Benefit: Tax & Growth</li>
+            <li><i class="bi bi-check2"></i> Instant Tax Receipts</li>
+          </ul>
+        </div>
+
+        <div class="glass-card service-card reveal-on-scroll">
+          <div class="service-icon-box" style="color: var(--accent-cyan);">
+            <i class="bi bi-sunset"></i>
+          </div>
+          <h3 class="service-title">Retirement & Freedom Planning</h3>
+          <p class="service-desc">Design a robust retirement corpus that guarantees financial independence and regular inflation-adjusted monthly pension post-retirement.</p>
+          <ul class="service-features-list">
+            <li><i class="bi bi-check2"></i> SWP Monthly Cashflow</li>
+            <li><i class="bi bi-check2"></i> Inflation Protection</li>
+            <li><i class="bi bi-check2"></i> Capital Preservation</li>
+          </ul>
+        </div>
+
+        <div class="glass-card service-card reveal-on-scroll">
+          <div class="service-icon-box" style="color: var(--accent-amber);">
+            <i class="bi bi-mortarboard"></i>
+          </div>
+          <h3 class="service-title">Children's Education & Future</h3>
+          <p class="service-desc">Secure your child's higher education and dream aspirations without stress through dedicated milestone-linked investment portfolios.</p>
+          <ul class="service-features-list">
+            <li><i class="bi bi-check2"></i> Goal Horizon Alignment</li>
+            <li><i class="bi bi-check2"></i> Risk Rebalancing Strategy</li>
+            <li><i class="bi bi-check2"></i> Guaranteed Target Tracking</li>
+          </ul>
+        </div>
+
+        <div class="glass-card service-card reveal-on-scroll">
+          <div class="service-icon-box" style="color: var(--accent-rose);">
+            <i class="bi bi-activity"></i>
+          </div>
+          <h3 class="service-title">Existing Portfolio Review</h3>
+          <p class="service-desc">Get an unbiased health checkup of your existing mutual fund holdings, eliminate underperforming schemes, and optimize asset allocation.</p>
+          <ul class="service-features-list">
+            <li><i class="bi bi-check2"></i> Overlap Removal Analysis</li>
+            <li><i class="bi bi-check2"></i> Expense Ratio Check</li>
+            <li><i class="bi bi-check2"></i> Risk-Return Scorecard</li>
+          </ul>
+        </div>
+
+        <div class="glass-card service-card reveal-on-scroll">
+          <div class="service-icon-box" style="color: var(--primary);">
+            <i class="bi bi-wallet2"></i>
+          </div>
+          <h3 class="service-title">Emergency & Short-Term Funds</h3>
+          <p class="service-desc">Park excess liquid cash in low-risk Liquid and Money Market Funds for high liquidity and better returns than traditional savings accounts.</p>
+          <ul class="service-features-list">
+            <li><i class="bi bi-check2"></i> Instant 24-hour Liquidity</li>
+            <li><i class="bi bi-check2"></i> Zero Exit Load Options</li>
+            <li><i class="bi bi-check2"></i> Safety of Capital</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       6. ABOUT ME / FOUNDER PROFILE SECTION
+       ========================================================================== -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid reveal-on-scroll">
+        <div class="glass-card about-image-card">
+          <div class="profile-avatar-wrapper">
+            <div class="profile-avatar-ring">
+              <img src="parthasarathi-panda.jpg" alt="Parthasarathi Panda - AMFI Registered Mutual Fund Distributor (ARN-185973)" />
+            </div>
+            <span class="live-status-pill"><span class="live-pulse-dot"></span> AMFI Validated</span>
+          </div>
+          <h3 class="founder-name">Parthasarathi Panda</h3>
+          <p class="founder-title">AMFI Registered Mutual Fund Distributor</p>
+          <div class="founder-arn-badge"><i class="bi bi-patch-check-fill"></i> ARN-185973 Certified</div>
+          
+          <div class="founder-card-stats">
+            <div class="f-stat-item">
+              <strong>₹15+ Cr</strong>
+              <span>AUM</span>
+            </div>
+            <div class="f-stat-divider"></div>
+            <div class="f-stat-item">
+              <strong>₹18+ L</strong>
+              <span>Monthly SIP</span>
+            </div>
+            <div class="f-stat-divider"></div>
+            <div class="f-stat-item">
+              <strong>400+</strong>
+              <span>Families</span>
+            </div>
+            <div class="f-stat-divider"></div>
+            <div class="f-stat-item">
+              <strong>6+ Yrs</strong>
+              <span>Experience</span>
+            </div>
+          </div>
+
+          <!-- Sleek Compact NISM Qualifications Pills -->
+          <div class="founder-nism-pills">
+            <div class="nism-pill pill-cleared">
+              <div class="nism-pill-content">
+                <i class="bi bi-patch-check-fill"></i>
+                <div class="nism-pill-text">
+                  <strong>NISM Series V-A</strong>
+                  <span>Mutual Fund Distributors Cert.</span>
+                </div>
+              </div>
+              <span class="tag-mini mini-cleared">Cleared</span>
+            </div>
+
+            <div class="nism-pill pill-ongoing">
+              <div class="nism-pill-content">
+                <i class="bi bi-hourglass-split"></i>
+                <div class="nism-pill-text">
+                  <strong>NISM Series V-D</strong>
+                  <span>Mutual Fund Foundation Cert.</span>
+                </div>
+              </div>
+              <span class="tag-mini mini-ongoing">Ongoing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-content-box">
+          <span class="section-tag" style="width: fit-content;"><i class="bi bi-person"></i> Meet Your Advisor</span>
+          <h2 class="section-title">Dedicated to Building Your <span class="gradient-text">Generational Wealth</span></h2>
+          <p class="about-text">
+            With over 6 years of experience in mutual fund distribution and financial planning, my mission is simple: to make wealth creation easy, transparent, and accessible for every family.
+          </p>
+          <p class="about-text">
+            As an official AMFI Registered Mutual Fund Distributor (<strong>ARN-185973</strong>), I don't just sell mutual fund schemes — I partner with you to understand your family's dreams, risk tolerance, and time horizons, creating a customized financial roadmap that delivers long-term results.
+          </p>
+
+          <div class="credentials-list">
+            <div class="cred-card">
+              <div class="cred-icon"><i class="bi bi-award"></i></div>
+              <div class="cred-info">
+                <h4>AMFI Certified MFD</h4>
+                <p>ARN-185973 Validated</p>
+              </div>
+            </div>
+
+            <div class="cred-card">
+              <div class="cred-icon" style="color: var(--secondary); background: rgba(16,185,129,0.15);"><i class="bi bi-phone"></i></div>
+              <div class="cred-info">
+                <h4>100% Digital Process</h4>
+                <p>Paperless Onboarding</p>
+              </div>
+            </div>
+
+            <div class="cred-card">
+              <div class="cred-icon" style="color: var(--accent-cyan); background: rgba(6,182,212,0.15);"><i class="bi bi-heart-pulse"></i></div>
+              <div class="cred-info">
+                <h4>Regular Rebalancing</h4>
+                <p>Annual Portfolio Reviews</p>
+              </div>
+            </div>
+
+            <div class="cred-card">
+              <div class="cred-icon" style="color: var(--accent-amber); background: rgba(245,158,11,0.15);"><i class="bi bi-lock"></i></div>
+              <div class="cred-info">
+                <h4>Direct AMC Account</h4>
+                <p>Funds stay in your control</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       7. CLIENT TESTIMONIALS & WRITE-A-REVIEW HUB
+       ========================================================================== -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="testimonials-header-actions reveal-on-scroll">
+        <div>
+          <span class="section-tag"><i class="bi bi-chat-square-quote"></i> Client Feedback</span>
+          <h2 class="section-title" style="margin-bottom: 0;">What My <span class="gradient-text">Clients Say</span></h2>
+        </div>
+        <button class="btn btn-secondary" id="open-review-modal-btn">
+          <i class="bi bi-pencil-square"></i> Write a Review
+        </button>
+      </div>
+
+      <div class="testimonials-grid reveal-on-scroll" id="testimonials-container">
+        <!-- Rendered dynamically via app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       8. FREQUENTLY ASKED QUESTIONS (FAQ ACCORDION)
+       ========================================================================== -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-tag"><i class="bi bi-question-circle"></i> Got Questions?</span>
+        <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+        <p class="section-subtitle">Everything you need to know about investing in Mutual Funds through an MFD.</p>
+      </div>
+
+      <div class="faq-wrapper reveal-on-scroll">
+        <div class="glass-card faq-item active">
+          <div class="faq-question">
+            <span>Why should I invest through an AMFI Registered Mutual Fund Distributor?</span>
+            <i class="bi bi-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            An AMFI Registered MFD like Parthasarathi Panda (ARN-185973) provides expert scheme selection, portfolio rebalancing guidance, emotional discipline during market crashes, and paperless assistance without charging you any direct advisory fee.
+          </div>
+        </div>
+
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>How safe are Mutual Fund investments? Where does my money go?</span>
+            <i class="bi bi-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            All mutual funds in India are strictly regulated by SEBI (Securities and Exchange Board of India). Your investment money is transferred directly from your bank account to the Asset Management Company (AMC) custodian (like SBI Mutual Fund, HDFC Mutual Fund, ICICI Prudential), ensuring 100% safety of your funds.
+          </div>
+        </div>
+
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>What is the minimum amount required to start a monthly SIP?</span>
+            <i class="bi bi-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            You can start a Systematic Investment Plan (SIP) with as low as ₹500 or ₹1,000 per month. You can increase, decrease, or pause your SIP amount anytime without any penalty.
+          </div>
+        </div>
+
+        <div class="glass-card faq-item">
+          <div class="faq-question">
+            <span>How do I redeem or withdraw money from my Mutual Fund?</span>
+            <i class="bi bi-chevron-down faq-icon"></i>
+          </div>
+          <div class="faq-answer">
+            Redemption is 100% online. With one click on your mobile phone or portal, your redeemed funds are directly credited into your registered bank account within 1 to 3 working days.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       9. FOOTER & COMPLIANCE SECTION
+       ========================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#hero" class="brand-logo">
+            <div class="brand-icon">
+              <i class="bi bi-graph-up-arrow"></i>
+            </div>
+            <div class="brand-title-group">
+              <span class="brand-main-title" style="color: #ffffff !important;">PARTHASARATHI</span>
+              <span class="brand-sub-heading" style="color: #818cf8 !important;">FINANCIAL SERVICES</span>
+            </div>
+          </a>
+          <p>AMFI Registered Mutual Fund Distributor (ARN-185973) providing transparent wealth management solutions, SIP planning, and financial education.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#calculators">SIP Calculator</a></li>
+            <li><a href="#services">Services Offered</a></li>
+            <li><a href="#about">About Parthasarathi</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Equity SIPs</a></li>
+            <li><a href="#services">ELSS Tax Saving</a></li>
+            <li><a href="#services">Retirement SWP</a></li>
+            <li><a href="#services">Portfolio Review</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Contact & Support</h4>
+          <ul class="footer-links">
+            <li><a href="tel:+917609952853"><i class="bi bi-telephone"></i> +91 76099 52853</a></li>
+            <li><a href="mailto:partha19977@gmail.com"><i class="bi bi-envelope"></i> partha19977@gmail.com</a></li>
+            <li><a href="https://wa.me/917609952853" target="_blank"><i class="bi bi-whatsapp"></i> Chat on WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Regulatory Risk Disclaimer Box -->
+      <div class="disclaimer-box">
+        <strong>AMFI Regulatory Disclaimer & Disclosure:</strong> Mutual Fund investments are subject to market risks, read all scheme related documents carefully. Past performance is not an indicator of future returns. Parthasarathi Panda is an AMFI Registered Mutual Fund Distributor (ARN-185973) acting as an intermediary between investors and Asset Management Companies (AMCs).
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Parthasarathi Financial Services — AMFI Registered Mutual Fund Distributor (ARN-185973). All Rights Reserved.</p>
+        <p>Built with <i class="bi bi-heart-fill text-danger"></i> for Smart Wealth Building</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       10. MODAL DIALOGS (REVIEW SUBMISSION & APPOINTMENT BOOKING)
+       ========================================================================== -->
+  
+  <!-- Write a Review Modal -->
+  <div class="modal-overlay" id="review-modal">
+    <div class="glass-card modal-card">
+      <button class="modal-close-btn" aria-label="Close Modal"><i class="bi bi-x-lg"></i></button>
+      <h3 class="modal-title">Write a Client Review</h3>
+      <p class="modal-subtitle">Share your experience to help others make informed wealth decisions.</p>
+      
+      <form id="review-form">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label">Your Rating</label>
+          <div class="star-rating-selector" id="star-selector">
+            <i class="bi bi-star-fill selected" data-star="1"></i>
+            <i class="bi bi-star-fill selected" data-star="2"></i>
+            <i class="bi bi-star-fill selected" data-star="3"></i>
+            <i class="bi bi-star-fill selected" data-star="4"></i>
+            <i class="bi bi-star-fill selected" data-star="5"></i>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-control" id="review-name" placeholder="e.g. Ramesh Kumar" required />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label">Investment Goal Achieved</label>
+          <input type="text" class="form-control" id="review-goal" placeholder="e.g. Wealth Creation / Retirement Fund" />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label">Your Review Message</label>
+          <textarea class="form-control" id="review-text" rows="4" placeholder="How has Parthasarathi helped you in your financial journey?" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          <i class="bi bi-send"></i> Submit Review
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Book Appointment Consultation Modal -->
+  <div class="modal-overlay" id="booking-modal">
+    <div class="glass-card modal-card">
+      <button class="modal-close-btn" aria-label="Close Modal"><i class="bi bi-x-lg"></i></button>
+      <h3 class="modal-title">Book a Free Advisory Session</h3>
+      <p class="modal-subtitle">Get personalized Mutual Fund & SIP recommendations tailored to your goals.</p>
+      
+      <form id="booking-form">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label">Your Full Name</label>
+          <input type="text" class="form-control" id="book-name" placeholder="e.g. Parthasarathi" required />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label">WhatsApp Mobile Number</label>
+          <input type="tel" class="form-control" id="book-phone" placeholder="e.g. +91 7609952853" required />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label">Select Service of Interest</label>
+          <select class="form-control" id="book-service">
+            <option value="SIP Investment">Start New Monthly SIP</option>
+            <option value="ELSS Tax Saving">ELSS Tax Saving (80C)</option>
+            <option value="Retirement SWP">Retirement & Pension Plan</option>
+            <option value="Portfolio Review">Existing Portfolio Review</option>
+            <option value="General Consultation">General Wealth Advisory</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-whatsapp" style="width: 100%;">
+          <i class="bi bi-whatsapp"></i> Connect via WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Custom JS Application -->
+  <script src="app.js"></script>
+</body>
+</html>
