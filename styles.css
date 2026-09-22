@@ -865,6 +865,14 @@ input[type=range].custom-range::-webkit-slider-thumb:hover {
   flex-shrink: 0;
 }
 
+.cta-text-desktop {
+  display: inline;
+}
+
+.cta-text-mobile {
+  display: none;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
@@ -2953,27 +2961,51 @@ html, body {
   }
 }
 
+@media (max-width: 480px) {
+  .cta-text-desktop {
+    display: none !important;
+  }
+  .cta-text-mobile {
+    display: inline !important;
+  }
+  .navbar .container {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    gap: 6px !important;
+  }
+  .btn-nav-cta {
+    padding: 6px 10px !important;
+    font-size: 0.76rem !important;
+    border-radius: 8px !important;
+  }
+  .hamburger-menu-btn {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 1.05rem !important;
+  }
+}
+
 @media (max-width: 360px) {
   .brand-main-title {
-    font-size: 0.92rem !important;
+    font-size: 0.88rem !important;
     font-weight: 800 !important;
   }
   .brand-sub-heading {
-    font-size: 0.46rem !important;
-    letter-spacing: 0.12em !important;
+    font-size: 0.44rem !important;
+    letter-spacing: 0.1em !important;
   }
   .brand-icon {
-    width: 30px !important;
-    height: 30px !important;
-    font-size: 0.9rem !important;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.85rem !important;
   }
   .btn-nav-cta {
     padding: 5px 8px !important;
     font-size: 0.72rem !important;
   }
   .theme-toggle-btn, .hamburger-menu-btn {
-    width: 32px !important;
-    height: 32px !important;
-    font-size: 0.95rem !important;
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 0.9rem !important;
   }
 }
