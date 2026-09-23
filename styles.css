@@ -416,8 +416,16 @@ button, input, select, textarea {
 
 /* Section Common Styling */
 .section {
-  padding: 88px 0;
+  padding: 64px 0;
   position: relative;
+}
+
+#services {
+  padding-bottom: 24px;
+}
+
+#about {
+  padding-top: 36px;
 }
 
 .section-header {
@@ -2993,6 +3001,15 @@ html, body {
     height: 32px !important;
     font-size: 0.95rem !important;
   }
+  .calc-tabs {
+    gap: 6px !important;
+    margin-bottom: 20px !important;
+  }
+  .calc-tab-btn {
+    padding: 7px 12px !important;
+    font-size: 0.78rem !important;
+    border-radius: 20px !important;
+  }
 }
 
 @media (max-width: 360px) {
@@ -3022,5 +3039,9 @@ html, body {
     width: 30px !important;
     height: 30px !important;
     font-size: 0.88rem !important;
+  }
+  .calc-tab-btn {
+    padding: 6px 10px !important;
+    font-size: 0.74rem !important;
   }
 }

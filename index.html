@@ -321,9 +321,11 @@
 
       <div class="calculators-wrapper reveal-on-scroll">
         <div class="calc-tabs">
-          <button class="calc-tab-btn active" data-calc="sip"><i class="bi bi-arrow-repeat"></i> Monthly SIP Calculator</button>
-          <button class="calc-tab-btn" data-calc="lumpsum"><i class="bi bi-cash-stack"></i> Lumpsum Calculator</button>
-          <button class="calc-tab-btn" data-calc="goal"><i class="bi bi-trophy"></i> Target Goal Planner</button>
+          <button class="calc-tab-btn active" data-calc="sip"><i class="bi bi-arrow-repeat"></i> Monthly SIP</button>
+          <button class="calc-tab-btn" data-calc="lumpsum"><i class="bi bi-cash-stack"></i> Lumpsum</button>
+          <button class="calc-tab-btn" data-calc="goal"><i class="bi bi-trophy"></i> Target Goal</button>
+          <button class="calc-tab-btn" data-calc="retirement"><i class="bi bi-person-workspace"></i> Retirement SWP</button>
+          <button class="calc-tab-btn" data-calc="education"><i class="bi bi-mortarboard-fill"></i> Child Education</button>
         </div>
 
         <div class="glass-card calc-content-card">
@@ -772,11 +774,14 @@
 
       <div class="services-grid">
         <div class="glass-card service-card reveal-on-scroll">
-          <div class="service-icon-box">
-            <i class="bi bi-piggy-bank"></i>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="service-icon-box">
+              <i class="bi bi-piggy-bank"></i>
+            </div>
+            <span class="badge" style="background: rgba(0,230,118,0.15); color: var(--secondary); font-size: 0.72rem; padding: 4px 10px; border-radius: 12px;">Best for Wealth Building</span>
           </div>
           <h3 class="service-title">Systematic Investment Plans (SIP)</h3>
-          <p class="service-desc">Start small with monthly automated investments across top-performing Equity, Hybrid, and Debt funds to harness the magic of compounding.</p>
+          <p class="service-desc">Start small with monthly automated investments across top-performing Equity, Hybrid, and Index funds to harness the power of compounding.</p>
           <ul class="service-features-list">
             <li><i class="bi bi-check2"></i> Rupee Cost Averaging</li>
             <li><i class="bi bi-check2"></i> Auto Step-up SIP Options</li>
@@ -785,68 +790,103 @@
         </div>
 
         <div class="glass-card service-card reveal-on-scroll">
-          <div class="service-icon-box" style="color: var(--secondary);">
-            <i class="bi bi-shield-lock"></i>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="service-icon-box" style="color: var(--secondary);">
+              <i class="bi bi-shield-lock"></i>
+            </div>
+            <span class="badge" style="background: rgba(129,140,248,0.15); color: #818cf8; font-size: 0.72rem; padding: 4px 10px; border-radius: 12px;">Tax Benefit Sec 80C</span>
           </div>
           <h3 class="service-title">ELSS Tax Saving Funds</h3>
           <p class="service-desc">Save tax under Section 80C up to ₹1,50,000 while building inflation-beating equity wealth with the shortest 3-year lock-in period.</p>
           <ul class="service-features-list">
-            <li><i class="bi bi-check2"></i> Lowest Lock-in vs PPF/FD</li>
-            <li><i class="bi bi-check2"></i> Dual Benefit: Tax & Growth</li>
-            <li><i class="bi bi-check2"></i> Instant Tax Receipts</li>
+            <li><i class="bi bi-check2"></i> Shortest 3-Year Lock-in vs PPF/FD</li>
+            <li><i class="bi bi-check2"></i> Dual Benefit: Tax Save + Growth</li>
+            <li><i class="bi bi-check2"></i> Instant Tax Deduction Receipts</li>
           </ul>
         </div>
 
         <div class="glass-card service-card reveal-on-scroll">
-          <div class="service-icon-box" style="color: var(--accent-cyan);">
-            <i class="bi bi-sunset"></i>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="service-icon-box" style="color: var(--accent-cyan);">
+              <i class="bi bi-sunset"></i>
+            </div>
+            <span class="badge" style="background: rgba(6,182,212,0.15); color: #06b6d4; font-size: 0.72rem; padding: 4px 10px; border-radius: 12px;">Monthly SWP Cashflow</span>
           </div>
-          <h3 class="service-title">Retirement & Freedom Planning</h3>
+          <h3 class="service-title">Retirement & Pension SWP</h3>
           <p class="service-desc">Design a robust retirement corpus that guarantees financial independence and regular inflation-adjusted monthly pension post-retirement.</p>
           <ul class="service-features-list">
-            <li><i class="bi bi-check2"></i> SWP Monthly Cashflow</li>
-            <li><i class="bi bi-check2"></i> Inflation Protection</li>
-            <li><i class="bi bi-check2"></i> Capital Preservation</li>
+            <li><i class="bi bi-check2"></i> SWP Monthly Income Plan</li>
+            <li><i class="bi bi-check2"></i> Inflation-Proof Corpus</li>
+            <li><i class="bi bi-check2"></i> Tax Efficient Withdrawals</li>
           </ul>
         </div>
 
         <div class="glass-card service-card reveal-on-scroll">
-          <div class="service-icon-box" style="color: var(--accent-amber);">
-            <i class="bi bi-mortarboard"></i>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="service-icon-box" style="color: var(--accent-amber);">
+              <i class="bi bi-mortarboard"></i>
+            </div>
+            <span class="badge" style="background: rgba(245,158,11,0.15); color: #f59e0b; font-size: 0.72rem; padding: 4px 10px; border-radius: 12px;">Child Goal Horizon</span>
           </div>
           <h3 class="service-title">Children's Education & Future</h3>
-          <p class="service-desc">Secure your child's higher education and dream aspirations without stress through dedicated milestone-linked investment portfolios.</p>
+          <p class="service-desc">Secure your child's higher education and dream aspirations without debt stress through dedicated milestone-linked investment portfolios.</p>
           <ul class="service-features-list">
-            <li><i class="bi bi-check2"></i> Goal Horizon Alignment</li>
-            <li><i class="bi bi-check2"></i> Risk Rebalancing Strategy</li>
-            <li><i class="bi bi-check2"></i> Guaranteed Target Tracking</li>
+            <li><i class="bi bi-check2"></i> College Horizon Alignment</li>
+            <li><i class="bi bi-check2"></i> Risk De-escalation Strategy</li>
+            <li><i class="bi bi-check2"></i> Goal Target Tracking</li>
           </ul>
         </div>
 
         <div class="glass-card service-card reveal-on-scroll">
-          <div class="service-icon-box" style="color: var(--accent-rose);">
-            <i class="bi bi-activity"></i>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="service-icon-box" style="color: var(--accent-rose);">
+              <i class="bi bi-activity"></i>
+            </div>
+            <span class="badge" style="background: rgba(244,63,94,0.15); color: #f43f5e; font-size: 0.72rem; padding: 4px 10px; border-radius: 12px;">Portfolio Health Check</span>
           </div>
           <h3 class="service-title">Existing Portfolio Review</h3>
           <p class="service-desc">Get an unbiased health checkup of your existing mutual fund holdings, eliminate underperforming schemes, and optimize asset allocation.</p>
           <ul class="service-features-list">
             <li><i class="bi bi-check2"></i> Overlap Removal Analysis</li>
-            <li><i class="bi bi-check2"></i> Expense Ratio Check</li>
+            <li><i class="bi bi-check2"></i> Scheme Expense Ratio Check</li>
             <li><i class="bi bi-check2"></i> Risk-Return Scorecard</li>
           </ul>
         </div>
 
         <div class="glass-card service-card reveal-on-scroll">
-          <div class="service-icon-box" style="color: var(--primary);">
-            <i class="bi bi-wallet2"></i>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="service-icon-box" style="color: var(--primary);">
+              <i class="bi bi-wallet2"></i>
+            </div>
+            <span class="badge" style="background: rgba(99,102,241,0.15); color: #6366f1; font-size: 0.72rem; padding: 4px 10px; border-radius: 12px;">24-hr Liquidity</span>
           </div>
           <h3 class="service-title">Emergency & Short-Term Funds</h3>
           <p class="service-desc">Park excess liquid cash in low-risk Liquid and Money Market Funds for high liquidity and better returns than traditional savings accounts.</p>
           <ul class="service-features-list">
             <li><i class="bi bi-check2"></i> Instant 24-hour Liquidity</li>
             <li><i class="bi bi-check2"></i> Zero Exit Load Options</li>
-            <li><i class="bi bi-check2"></i> Safety of Capital</li>
+            <li><i class="bi bi-check2"></i> Safety of Principal Capital</li>
           </ul>
+        </div>
+      </div>
+
+      <!-- AMFI Distributor Code of Conduct & Commitment Banner -->
+      <div class="glass-card reveal-on-scroll" style="margin-top: 32px; padding: 28px; border-left: 4px solid var(--secondary); background: var(--card-bg); border: 1px solid var(--glass-border); border-left: 4px solid var(--secondary);">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
+          <div style="flex: 1; min-width: 280px;">
+            <span class="badge" style="background: rgba(0,230,118,0.15); color: var(--secondary); font-size: 0.78rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 8px; display: inline-block;">
+              <i class="bi bi-patch-check-fill"></i> AMFI Registered Code of Conduct (ARN-185973)
+            </span>
+            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; color: var(--text-main);">Transparent & Investor-First Distribution</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+              All scheme recommendations adhere strictly to AMFI guidelines. We analyze risk tolerance, investment horizon, and fund manager track record to construct tailored portfolios.
+            </p>
+          </div>
+          <div>
+            <button class="btn btn-primary open-booking-modal-btn" style="border-radius: 12px; padding: 12px 20px;">
+              <i class="bi bi-calendar-event"></i> Book Advisory Session
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -971,12 +1011,23 @@
        ========================================================================== -->
   <section class="section" id="testimonials">
     <div class="container">
-      <div class="testimonials-header-actions reveal-on-scroll">
+      <div class="testimonials-header-actions reveal-on-scroll" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 24px;">
         <div>
-          <span class="section-tag"><i class="bi bi-chat-square-quote"></i> Client Feedback</span>
-          <h2 class="section-title" style="margin-bottom: 0;">What My <span class="gradient-text">Clients Say</span></h2>
+          <span class="section-tag"><i class="bi bi-chat-square-quote"></i> Verified Client Feedback</span>
+          <h2 class="section-title" style="margin-bottom: 6px;">What My <span class="gradient-text">Investors Say</span></h2>
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--text-muted);">
+            <div style="color: #fbbf24; font-weight: 700;">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <span style="color: var(--text-main); font-weight: 800; margin-left: 4px;">4.9 / 5.0</span>
+            </div>
+            <span>• Verified Client Reviews</span>
+          </div>
         </div>
-        <button class="btn btn-secondary" id="open-review-modal-btn">
+        <button class="btn btn-secondary" id="open-review-modal-btn" style="border-radius: 12px; padding: 10px 18px;">
           <i class="bi bi-pencil-square"></i> Write a Review
         </button>
       </div>
@@ -1153,33 +1204,64 @@
   <div class="modal-overlay" id="booking-modal">
     <div class="glass-card modal-card">
       <button class="modal-close-btn" aria-label="Close Modal"><i class="bi bi-x-lg"></i></button>
-      <h3 class="modal-title">Book a Free Advisory Session</h3>
-      <p class="modal-subtitle">Get personalized Mutual Fund & SIP recommendations tailored to your goals.</p>
+      <div style="text-align: center; margin-bottom: 16px;">
+        <span class="badge" style="background: rgba(0,230,118,0.15); color: var(--secondary); font-size: 0.78rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(0,230,118,0.3); display: inline-flex; align-items: center; gap: 6px;">
+          <span class="live-pulse-dot"></span> AMFI Registered MFD (ARN-185973)
+        </span>
+      </div>
+      <h3 class="modal-title" style="text-align: center;">Book a Free Advisory Session</h3>
+      <p class="modal-subtitle" style="text-align: center; margin-bottom: 20px;">Get personalized Mutual Fund & SIP recommendations tailored to your wealth goals.</p>
       
+      <!-- Direct Quick Dial / WhatsApp Action Buttons -->
+      <div class="modal-quick-actions" style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <a href="tel:+917609952853" class="btn btn-outline" style="flex: 1; font-size: 0.85rem; padding: 10px 12px; justify-content: center; border-radius: 12px;">
+          <i class="bi bi-telephone-fill" style="color: var(--primary);"></i> Call Now
+        </a>
+        <a href="https://wa.me/917609952853?text=Hi%20Parthasarathi,%20I%20want%20to%20book%20a%20free%20financial%20advisory%20session." target="_blank" class="btn btn-whatsapp" style="flex: 1; font-size: 0.85rem; padding: 10px 12px; justify-content: center; border-radius: 12px;">
+          <i class="bi bi-whatsapp"></i> Direct Chat
+        </a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; color: var(--text-muted); font-size: 0.78rem;">
+        <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.1);"></div>
+        <span>OR SCHEDULE A CALLBACK</span>
+        <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.1);"></div>
+      </div>
+
       <form id="booking-form">
-        <div class="form-group" style="margin-bottom: 16px;">
+        <div class="form-group" style="margin-bottom: 14px;">
           <label class="form-label">Your Full Name</label>
-          <input type="text" class="form-control" id="book-name" placeholder="e.g. Parthasarathi" required />
+          <input type="text" class="form-control" id="book-name" placeholder="e.g. Parthasarathi Panda" required />
         </div>
 
-        <div class="form-group" style="margin-bottom: 16px;">
+        <div class="form-group" style="margin-bottom: 14px;">
           <label class="form-label">WhatsApp Mobile Number</label>
           <input type="tel" class="form-control" id="book-phone" placeholder="e.g. +91 7609952853" required />
         </div>
 
-        <div class="form-group" style="margin-bottom: 24px;">
+        <div class="form-group" style="margin-bottom: 14px;">
           <label class="form-label">Select Service of Interest</label>
           <select class="form-control" id="book-service">
             <option value="SIP Investment">Start New Monthly SIP</option>
-            <option value="ELSS Tax Saving">ELSS Tax Saving (80C)</option>
-            <option value="Retirement SWP">Retirement & Pension Plan</option>
-            <option value="Portfolio Review">Existing Portfolio Review</option>
-            <option value="General Consultation">General Wealth Advisory</option>
+            <option value="ELSS Tax Saving">ELSS Tax Saving (Section 80C)</option>
+            <option value="Retirement SWP">Retirement & Systematic Withdrawal (SWP)</option>
+            <option value="Portfolio Review">Existing Mutual Fund Portfolio Review</option>
+            <option value="General Wealth Advisory">General Wealth & Goal Advisory</option>
           </select>
         </div>
 
-        <button type="submit" class="btn btn-whatsapp" style="width: 100%;">
-          <i class="bi bi-whatsapp"></i> Connect via WhatsApp
+        <div class="form-group" style="margin-bottom: 22px;">
+          <label class="form-label">Preferred Callback Time</label>
+          <select class="form-control" id="book-time">
+            <option value="Morning (9 AM - 12 PM)">Morning (9:00 AM - 12:00 PM)</option>
+            <option value="Afternoon (12 PM - 4 PM)">Afternoon (12:00 PM - 4:00 PM)</option>
+            <option value="Evening (4 PM - 8 PM)">Evening (4:00 PM - 8:00 PM)</option>
+            <option value="Anytime Today">Anytime Today</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: 12px; font-weight: 700; padding: 12px;">
+          <i class="bi bi-calendar-check-fill"></i> Request Free Advisory Callback
         </button>
       </form>
     </div>

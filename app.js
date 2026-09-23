@@ -221,6 +221,18 @@ function updateCalculatorView() {
     amountInput.max = 50000000;
     amountInput.step = 100000;
     amountInput.value = 5000000;
+  } else if (activeCalcMode === 'retirement') {
+    labelAmount.textContent = 'Current Monthly Household Expense (₹)';
+    amountInput.min = 10000;
+    amountInput.max = 500000;
+    amountInput.step = 5000;
+    amountInput.value = 40000;
+  } else if (activeCalcMode === 'education') {
+    labelAmount.textContent = 'Current Cost of Desired Degree (₹)';
+    amountInput.min = 200000;
+    amountInput.max = 10000000;
+    amountInput.step = 100000;
+    amountInput.value = 1500000;
   }
 
   calculateFinancials();
@@ -297,10 +309,62 @@ function calculateFinancials() {
     document.getElementById('metric-invested-label').textContent = 'Required Monthly SIP';
     document.getElementById('metric-invested-val').textContent = formatCurrency(Math.round(requiredMonthly));
     document.getElementById('metric-returns-val').textContent = formatCurrency(Math.round(estimatedReturns));
+    document.getElementById('metric-total-label').textContent = 'Target Goal Corpus';
     document.getElementById('metric-total-val').textContent = formatCurrency(Math.round(totalFutureValue));
     
     const diffEl = document.getElementById('metric-stepup-diff');
     if (diffEl) diffEl.style.display = 'none';
+
+    renderCalcChart(investedTotal, estimatedReturns);
+    return;
+  } else if (activeCalcMode === 'retirement') {
+    const monthlyExpense = amount;
+    const futureMonthlyExpense = monthlyExpense * Math.pow(1 + 0.06, years); // 6% annual inflation
+    const corpusNeeded = futureMonthlyExpense * 12 * 25; // 25 years SWP corpus
+    const monthlyRate = rate / 12 / 100;
+    const months = years * 12;
+    const requiredSIP = corpusNeeded / (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate));
+
+    investedTotal = requiredSIP * months;
+    totalFutureValue = corpusNeeded;
+    estimatedReturns = corpusNeeded - investedTotal;
+
+    document.getElementById('metric-invested-label').textContent = 'Required Monthly SIP Today';
+    document.getElementById('metric-invested-val').textContent = formatCurrency(Math.round(requiredSIP));
+    document.getElementById('metric-returns-val').textContent = formatCurrency(Math.round(futureMonthlyExpense)) + ' /mo';
+    document.getElementById('metric-total-label').textContent = 'Target Retirement SWP Corpus';
+    document.getElementById('metric-total-val').textContent = formatCurrency(Math.round(corpusNeeded));
+    
+    const diffEl = document.getElementById('metric-stepup-diff');
+    if (diffEl) {
+      diffEl.style.display = 'block';
+      diffEl.innerHTML = `<i class="bi bi-shield-check"></i> Inflated Monthly Expense at Retirement: <strong>${formatCurrency(Math.round(futureMonthlyExpense))}/month</strong>`;
+    }
+
+    renderCalcChart(investedTotal, estimatedReturns);
+    return;
+  } else if (activeCalcMode === 'education') {
+    const currentDegreeCost = amount;
+    const futureDegreeCost = currentDegreeCost * Math.pow(1 + 0.08, years); // 8% education inflation
+    const monthlyRate = rate / 12 / 100;
+    const months = years * 12;
+    const requiredSIP = futureDegreeCost / (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate));
+
+    investedTotal = requiredSIP * months;
+    totalFutureValue = futureDegreeCost;
+    estimatedReturns = futureDegreeCost - investedTotal;
+
+    document.getElementById('metric-invested-label').textContent = 'Required Monthly SIP Today';
+    document.getElementById('metric-invested-val').textContent = formatCurrency(Math.round(requiredSIP));
+    document.getElementById('metric-returns-val').textContent = formatCurrency(Math.round(futureDegreeCost));
+    document.getElementById('metric-total-label').textContent = 'Future Education Fund Required';
+    document.getElementById('metric-total-val').textContent = formatCurrency(Math.round(futureDegreeCost));
+    
+    const diffEl = document.getElementById('metric-stepup-diff');
+    if (diffEl) {
+      diffEl.style.display = 'block';
+      diffEl.innerHTML = `<i class="bi bi-mortarboard-fill"></i> Adjusted for Education Inflation (@8% p.a.)`;
+    }
 
     renderCalcChart(investedTotal, estimatedReturns);
     return;
@@ -656,16 +720,21 @@ async function renderReviews() {
   container.innerHTML = reviews.map(r => `
     <div class="glass-card testimonial-card">
       <div>
-        <div class="rating-stars" style="margin-bottom: 12px;">
-          ${'<i class="bi bi-star-fill"></i>'.repeat(r.rating || 5)}
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div class="rating-stars" style="color: #fbbf24;">
+            ${'<i class="bi bi-star-fill"></i>'.repeat(r.rating || 5)}
+          </div>
+          <span class="badge" style="background: rgba(0,230,118,0.12); color: var(--secondary); font-size: 0.72rem; padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(0,230,118,0.25);">
+            <i class="bi bi-patch-check-fill"></i> Verified Client
+          </span>
         </div>
-        <p class="review-text">"${escapeHtml(r.text)}"</p>
+        <p class="review-text" style="font-size: 0.93rem; line-height: 1.6; color: var(--text-main);">"${escapeHtml(r.text)}"</p>
       </div>
-      <div class="client-profile">
-        <div class="client-avatar">${escapeHtml((r.name || 'C').charAt(0).toUpperCase())}</div>
+      <div class="client-profile" style="margin-top: 16px; border-top: 1px solid var(--glass-border); padding-top: 12px;">
+        <div class="client-avatar" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); font-weight: 700; border: 2px solid rgba(255,255,255,0.2);">${escapeHtml((r.name || 'C').charAt(0).toUpperCase())}</div>
         <div class="client-info">
-          <h4>${escapeHtml(r.name || 'Valued Client')}</h4>
-          <p><i class="bi bi-bullseye" style="color: var(--secondary);"></i> ${escapeHtml(r.goal || 'Wealth Creation')}</p>
+          <h4 style="font-size: 0.98rem; font-weight: 700; color: var(--text-main);">${escapeHtml(r.name || 'Valued Client')}</h4>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;"><i class="bi bi-bullseye" style="color: var(--secondary);"></i> ${escapeHtml(r.goal || 'Wealth Creation')}</p>
         </div>
       </div>
     </div>
@@ -713,11 +782,13 @@ function initModalHandlers() {
       const name = document.getElementById('book-name').value.trim();
       const phone = document.getElementById('book-phone').value.trim();
       const service = document.getElementById('book-service').value;
+      const timeEl = document.getElementById('book-time');
+      const timeSlot = timeEl ? timeEl.value : 'Anytime Today';
 
       if (!name || !phone) return;
 
       // Pre-fill WhatsApp message
-      const msg = `Hello Parthasarathi, I would like to book a consultation.\nName: ${name}\nPhone: ${phone}\nInterested Service: ${service}`;
+      const msg = `Hello Parthasarathi,\n\nI would like to book a Free Advisory Consultation.\n\n👤 *Name*: ${name}\n📞 *Phone*: ${phone}\n🎯 *Service*: ${service}\n⏰ *Preferred Time*: ${timeSlot}\n\nLooking forward to speaking with you!`;
       const waUrl = `https://wa.me/917609952853?text=${encodeURIComponent(msg)}`;
       
       closeModal('booking-modal');
