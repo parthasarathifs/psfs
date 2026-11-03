@@ -6,6 +6,7 @@ const WA_NUMBER = '917609952853';
 
 document.addEventListener('DOMContentLoaded', () => {
   initPreloader();
+  initFundHouses();
   initNav();
   initCalculator();
   initCompare();
@@ -66,6 +67,19 @@ function initPreloader() {
   if (document.readyState === 'complete') finish();
   else window.addEventListener('load', finish);
   setTimeout(finish, 2500);
+}
+
+/* ---------- Fund house marquee ---------- */
+// The marquee scrolls by -50%, so each row needs one hidden copy of its tiles
+function initFundHouses() {
+  document.querySelectorAll('.amc-track').forEach(track => {
+    [...track.children].forEach(li => {
+      const copy = li.cloneNode(true);
+      copy.classList.add('clone');
+      copy.setAttribute('aria-hidden', 'true');
+      track.appendChild(copy);
+    });
+  });
 }
 
 /* ---------- Navigation ---------- */
