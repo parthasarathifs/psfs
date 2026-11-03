@@ -5,6 +5,7 @@
 const WA_NUMBER = '917609952853';
 
 document.addEventListener('DOMContentLoaded', () => {
+  initPreloader();
   initNav();
   initCalculator();
   initCompare();
@@ -47,6 +48,24 @@ function sipFV(monthly, annualRate, years) {
 
 function waLink(text) {
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
+/* ---------- Loading screen ---------- */
+// Shown for at least the ring animation (~0.9s), at most 2.5s, then fades out
+function initPreloader() {
+  const root = document.documentElement;
+  if (!root.classList.contains('preload')) return;
+  const start = performance.now();
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    setTimeout(() => root.classList.add('loaded'), Math.max(0, 900 - (performance.now() - start)));
+    try { sessionStorage.setItem('psfs-seen', '1'); } catch (e) {}
+  };
+  if (document.readyState === 'complete') finish();
+  else window.addEventListener('load', finish);
+  setTimeout(finish, 2500);
 }
 
 /* ---------- Navigation ---------- */
