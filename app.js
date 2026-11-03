@@ -1,925 +1,482 @@
 /* ==========================================================================
-   MUTUAL FUND DISTRIBUTOR (MFD) MODERN WEBSITE JAVASCRIPT LOGIC
+   Parthasarathi Financial Services — site scripts
    ========================================================================== */
 
+const WA_NUMBER = '917609952853';
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Core Modules
-  initPreloader();
-  initCalculators();
-  initQuizScorecard();
-  initFlipCards();
-  initTestimonialsManager();
-  initModalHandlers();
-  initFaqAccordion();
-  initNavScroll();
-  initMobileDrawer();
-  initHeroPreviewChart();
-  initScrollReveal();
-  initCounterNumbers();
+  initNav();
+  initCalculator();
+  initCompare();
+  initWaiting();
+  initLearn();
+  initGlossary();
+  initQuiz();
+  initBookingForm();
+  initReveal();
+  initCounters();
+  initScrollUi();
+  initSpotlight();
+  initTilt();
+  document.getElementById('year').textContent = new Date().getFullYear();
 });
 
-/* --------------------------------------------------------------------------
-   0. ULTRA-MODERN WEALTH COMPOUNDING PRELOADER HANDLER (60 FPS OPTIMIZED)
-   -------------------------------------------------------------------------- */
-function initPreloader() {
-  const preloader = document.getElementById('preloader');
-  const bar = document.getElementById('preloader-bar');
-  const ring = document.getElementById('preloader-ring');
-  const pctText = document.getElementById('preloader-pct');
-  const stepText = document.getElementById('preloader-step');
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (!preloader) return;
+/* ---------- Helpers ---------- */
+const $ = (id) => document.getElementById(id);
 
-  const circumference = 276.46; // 2 * PI * r (r=44)
-  let currentProgress = 0;
-  let targetProgress = 0;
-  let animId = null;
+function inr(num) {
+  return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(Math.round(num));
+}
 
-  const updateProgress = (val) => {
-    val = Math.min(Math.max(val, 0), 100);
-    
-    if (bar) bar.style.width = val + '%';
-    if (pctText) pctText.textContent = Math.round(val) + '%';
+// Short form for big numbers: ₹25.2 L, ₹1.4 Cr
+function inrShort(num) {
+  if (num >= 1e7) return '₹' + (num / 1e7).toFixed(2).replace(/\.?0+$/, '') + ' Cr';
+  if (num >= 1e5) return '₹' + (num / 1e5).toFixed(1).replace(/\.0$/, '') + ' L';
+  return inr(num);
+}
 
-    if (ring) {
-      const offset = circumference - (val / 100) * circumference;
-      ring.style.strokeDashoffset = offset;
+// Future value of a monthly SIP paid at the start of each month
+function sipFV(monthly, annualRate, years) {
+  const r = annualRate / 12 / 100;
+  const n = years * 12;
+  if (r === 0) return monthly * n;
+  return monthly * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+}
+
+function waLink(text) {
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
+/* ---------- Navigation ---------- */
+function initNav() {
+  const nav = $('nav');
+  const menuBtn = $('menu-btn');
+  const menu = $('mobile-menu');
+
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const setMenu = (open) => {
+    menu.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.innerHTML = open ? '<i class="bi bi-x-lg"></i>' : '<i class="bi bi-list"></i>';
+  };
+  menuBtn.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  // Highlight the current section in the desktop nav
+  const links = [...document.querySelectorAll('.nav-links a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  sections.forEach(s => observer.observe(s));
+  observer.observe($('top')); // clears the highlight when back at the hero
+}
+
+/* ---------- Calculator ---------- */
+const CALC_MODES = {
+  sip:        { label: 'Monthly SIP amount',            min: 500,    max: 100000,   step: 500,    value: 10000 },
+  lumpsum:    { label: 'One-time investment',           min: 5000,   max: 2000000,  step: 5000,   value: 100000 },
+  goal:       { label: 'Goal amount you need',          min: 100000, max: 50000000, step: 100000, value: 5000000 },
+  retirement: { label: 'Current monthly expenses',      min: 10000,  max: 500000,   step: 5000,   value: 40000 },
+  education:  { label: "Today's cost of the course",    min: 200000, max: 10000000, step: 100000, value: 1500000 }
+};
+let calcMode = 'sip';
+
+function initCalculator() {
+  document.querySelectorAll('.calc-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.calc-tab').forEach(t => {
+        t.classList.toggle('active', t === tab);
+        t.setAttribute('aria-selected', String(t === tab));
+      });
+      calcMode = tab.dataset.calc;
+      const cfg = CALC_MODES[calcMode];
+      const amount = $('calc-amount');
+      $('label-amount').textContent = cfg.label;
+      amount.min = cfg.min; amount.max = cfg.max; amount.step = cfg.step; amount.value = cfg.value;
+      if (calcMode === 'retirement' || calcMode === 'education') $('calc-years').value = Math.max($('calc-years').value, 10);
+      calculate();
+    });
+  });
+
+  ['calc-amount', 'calc-rate', 'calc-years', 'calc-stepup'].forEach(id => $(id).addEventListener('input', calculate));
+  $('calc-inflation').addEventListener('change', calculate);
+  calculate();
+}
+
+function paintRange(input) {
+  const pct = ((input.value - input.min) / (input.max - input.min)) * 100;
+  input.style.setProperty('--fill', pct + '%');
+}
+
+function calculate() {
+  const amount = +$('calc-amount').value;
+  const rate = +$('calc-rate').value;
+  const years = +$('calc-years').value;
+  const stepUp = +$('calc-stepup').value;
+  const inflationOn = $('calc-inflation').checked;
+
+  ['calc-amount', 'calc-rate', 'calc-years', 'calc-stepup'].forEach(id => paintRange($(id)));
+  $('badge-amount').textContent = inr(amount);
+  $('badge-rate').textContent = rate + '%';
+  $('badge-years').textContent = years + (years === 1 ? ' year' : ' years');
+  $('badge-stepup').textContent = stepUp + '%';
+
+  $('stepup-group').hidden = calcMode !== 'sip';
+  $('inflation-group').hidden = !(calcMode === 'sip' || calcMode === 'lumpsum');
+
+  let note = '';
+  let labels = { total: 'Estimated value', invested: 'Amount invested', gain: 'Estimated gain' };
+  let plan, headline;
+
+  if (calcMode === 'sip') {
+    plan = growthSeries({ monthly: amount, stepUp, rate, years });
+    if (stepUp > 0) note = `A ${stepUp}% yearly step-up adds about ${inrShort(plan.total - sipFV(amount, rate, years))}.`;
+  } else if (calcMode === 'lumpsum') {
+    plan = growthSeries({ lumpsum: amount, rate, years });
+  } else {
+    let target;
+    if (calcMode === 'goal') {
+      target = amount;
+      note = `To reach ${inrShort(amount)} in ${years} years.`;
+    } else if (calcMode === 'retirement') {
+      const futureExpense = amount * Math.pow(1.06, years);
+      target = futureExpense * 12 * 25; // rule of thumb: 25 years of expenses
+      note = `For a corpus of about ${inrShort(target)}. Your expenses may grow to ${inr(futureExpense)}/month at 6% inflation.`;
+    } else {
+      target = amount * Math.pow(1.08, years); // education inflation ~8%
+      note = `The course may cost about ${inrShort(target)} in ${years} years (8% education inflation).`;
     }
+    const monthly = target / sipFV(1, rate, years);
+    plan = growthSeries({ monthly, rate, years });
+    labels.total = 'Monthly SIP needed';
+    headline = monthly;
+  }
 
-    if (stepText) {
-      if (val < 30) {
-        stepText.textContent = 'Initializing Wealth Engine...';
-      } else if (val < 60) {
-        stepText.textContent = 'Curating Multi-AMC Portfolios...';
-      } else if (val < 85) {
-        stepText.textContent = 'Calculating Compounding Yields...';
-      } else {
-        stepText.textContent = 'Unlocking Financial Freedom...';
-      }
+  if (headline === undefined) {
+    headline = plan.total;
+    if (inflationOn) {
+      headline = plan.total / Math.pow(1.06, years);
+      labels.total = "Estimated value in today's money";
     }
+  }
+  showResult(headline, plan, note, labels, years);
+}
+
+// Year-by-year invested amount and value of a SIP (with optional step-up) or a lumpsum
+function growthSeries({ monthly = 0, stepUp = 0, lumpsum = 0, rate, years }) {
+  const r = rate / 12 / 100;
+  let value = lumpsum, invested = lumpsum, sip = monthly;
+  const investedByYear = [invested], valueByYear = [value];
+  for (let m = 1; m <= years * 12; m++) {
+    value = (value + sip) * (1 + r); // SIP paid at the start of each month
+    invested += sip;
+    if (m % 12 === 0) {
+      investedByYear.push(invested);
+      valueByYear.push(value);
+      sip *= 1 + stepUp / 100;
+    }
+  }
+  return { invested, total: value, investedByYear, valueByYear };
+}
+
+function showResult(headline, plan, note, labels, years) {
+  const gain = Math.max(plan.total - plan.invested, 0);
+  $('metric-total-label').textContent = labels.total;
+  tweenNumber($('metric-total-val'), headline, inr);
+  $('metric-note').textContent = note;
+  $('metric-invested-label').textContent = labels.invested;
+  $('metric-invested-val').textContent = inr(plan.invested);
+  $('metric-returns-label').textContent = labels.gain;
+  $('metric-returns-val').textContent = inr(gain);
+  const investedPct = plan.total > 0 ? Math.min(plan.invested / plan.total, 1) * 100 : 100;
+  $('bar-invested').style.width = investedPct + '%';
+  $('bar-gain').style.width = (100 - investedPct) + '%';
+  $('axis-end').textContent = 'Year ' + years;
+  drawChart(plan.investedByYear, plan.valueByYear);
+}
+
+/* ---------- Animated number ---------- */
+const tweens = new WeakMap();
+function tweenNumber(el, to, format, duration = 450) {
+  const from = tweens.get(el)?.value ?? to;
+  cancelAnimationFrame(tweens.get(el)?.raf);
+  if (REDUCED_MOTION || from === to) {
+    tweens.set(el, { value: to });
+    el.textContent = format(to);
+    return;
+  }
+  const start = performance.now();
+  const state = { value: from };
+  const step = (now) => {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    state.value = from + (to - from) * eased;
+    el.textContent = format(state.value);
+    if (t < 1) state.raf = requestAnimationFrame(step);
+  };
+  state.raf = requestAnimationFrame(step);
+  tweens.set(el, state);
+}
+
+/* ---------- Growth chart (SVG) ---------- */
+let chartState = null;
+function drawChart(invested, value) {
+  const W = 400, H = 150, PAD = 8;
+  const target = { invested, value };
+  const from = chartState && chartState.value.length === value.length ? chartState : target;
+  const start = performance.now();
+
+  const render = (inv, val) => {
+    const max = Math.max(...val, ...inv) || 1;
+    const x = (i) => (i / (val.length - 1)) * W;
+    const y = (v) => H - PAD - (v / max) * (H - PAD * 2);
+    const line = (arr) => arr.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+    const valueLine = line(val);
+    $('chart-value-line').setAttribute('d', valueLine);
+    $('chart-value-area').setAttribute('d', `${valueLine} L${W} ${H} L0 ${H} Z`);
+    $('chart-invested-line').setAttribute('d', line(inv));
   };
 
-  function animate() {
-    if (currentProgress < targetProgress) {
-      currentProgress += (targetProgress - currentProgress) * 0.18 + 0.5;
-      if (currentProgress >= targetProgress) {
-        currentProgress = targetProgress;
-      }
-      updateProgress(currentProgress);
-    }
+  const step = (now) => {
+    const t = REDUCED_MOTION ? 1 : Math.min((now - start) / 450, 1);
+    const e = 1 - Math.pow(1 - t, 3);
+    const mix = (a, b) => b.map((v, i) => a[i] + (v - a[i]) * e);
+    render(mix(from.invested, invested), mix(from.value, value));
+    if (t < 1) chartState.raf = requestAnimationFrame(step);
+  };
+  if (chartState) cancelAnimationFrame(chartState.raf);
+  chartState = { invested, value };
+  chartState.raf = requestAnimationFrame(step);
+}
 
-    if (currentProgress < 100) {
-      animId = requestAnimationFrame(animate);
-    } else {
-      updateProgress(100);
-      dismissPreloader();
-    }
-  }
-
-  // Smooth progress ticker
-  const interval = setInterval(() => {
-    targetProgress += Math.floor(Math.random() * 14) + 16;
-    if (targetProgress >= 100) {
-      targetProgress = 100;
-      clearInterval(interval);
-    }
-  }, 120);
-
-  animId = requestAnimationFrame(animate);
-
-  function dismissPreloader() {
-    if (animId) cancelAnimationFrame(animId);
-    setTimeout(() => {
-      preloader.classList.add('fade-out');
-      setTimeout(() => {
-        if (preloader.parentNode) {
-          preloader.style.display = 'none';
-          preloader.remove(); // Clean DOM removal so overlay never blocks interaction
-        }
-      }, 400);
-    }, 200);
-  }
-
-  window.addEventListener('load', () => {
-    targetProgress = 100;
-    clearInterval(interval);
+/* ---------- Saving vs investing illustration ---------- */
+function initCompare() {
+  document.querySelectorAll('[data-compare-rate]').forEach(el => {
+    el.textContent = inrShort(sipFV(10000, +el.dataset.compareRate, 10));
   });
 }
 
-/* --------------------------------------------------------------------------
-   0.1 SCROLL REVEAL ANIMATIONS (INTERSECTION OBSERVER)
-   -------------------------------------------------------------------------- */
-function initScrollReveal() {
-  const revealElements = document.querySelectorAll('.reveal-on-scroll');
-  
+/* ---------- Cost of waiting ---------- */
+function initWaiting() {
+  const RATE = 12;
+  const ids = ['wait-amount', 'wait-years', 'wait-delay'];
+  const update = () => {
+    const amount = +$('wait-amount').value;
+    const years = +$('wait-years').value;
+    const delay = +$('wait-delay').value;
+    ids.forEach(id => paintRange($(id)));
+    $('wait-badge-amount').textContent = inr(amount);
+    $('wait-badge-years').textContent = years + ' years';
+    $('wait-badge-delay').textContent = delay + (delay === 1 ? ' year' : ' years');
+
+    const now = sipFV(amount, RATE, years);
+    const later = sipFV(amount, RATE, years - delay);
+    const catchUp = now / sipFV(1, RATE, years - delay);
+
+    $('wait-later-label').textContent = `Start in ${delay} ${delay === 1 ? 'year' : 'years'}`;
+    tweenNumber($('wait-now'), now, inrShort);
+    tweenNumber($('wait-later'), later, inrShort);
+    tweenNumber($('wait-loss'), now - later, inrShort);
+    $('wait-fill-now').style.width = '100%';
+    $('wait-fill-later').style.width = (later / now) * 100 + '%';
+    $('wait-catchup').textContent = `To catch up, you would need about ${inr(catchUp)} a month instead of ${inr(amount)}.`;
+  };
+  ids.forEach(id => $(id).addEventListener('input', update));
+  update();
+}
+
+/* ---------- Learn corner tabs ---------- */
+function initLearn() {
+  const tabs = [...document.querySelectorAll('.learn-tab')];
+  const select = (tab) => {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      $(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    // On phones the topics scroll sideways; keep the chosen one in view
+    const row = tab.parentElement;
+    if (row.scrollWidth > row.clientWidth) row.scrollTo({ left: tab.offsetLeft - row.offsetLeft - 16, behavior: REDUCED_MOTION ? 'auto' : 'smooth' });
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', (e) => {
+      const dir = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      if (!dir) return;
+      e.preventDefault();
+      const next = tabs[(i + dir + tabs.length) % tabs.length];
+      select(next);
+      next.focus();
+    });
+  });
+  select(tabs[0]);
+}
+
+/* ---------- Glossary search ---------- */
+function initGlossary() {
+  const items = [...document.querySelectorAll('#glossary-list > div')];
+  $('glossary-search').addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    let shown = 0;
+    items.forEach(item => {
+      const match = !q || item.textContent.toLowerCase().includes(q);
+      item.hidden = !match;
+      if (match) shown++;
+    });
+    $('glossary-empty').hidden = shown > 0;
+  });
+}
+
+/* ---------- Readiness check ---------- */
+function initQuiz() {
+  const btn = $('quiz-btn');
+  const box = $('quiz-result');
+  const goalNames = { wealth: 'long-term wealth', tax: 'tax saving (ELSS)', child: "my child's education", retirement: 'retirement income' };
+
+  btn.addEventListener('click', () => {
+    const val = (name) => document.querySelector(`input[name="${name}"]:checked`).value;
+    const goal = val('goal'), emergency = val('emergency'), insurance = val('insurance'), horizon = val('horizon');
+
+    let score = 15;
+    score += { high: 30, med: 15, low: 5 }[emergency];
+    score += { full: 30, partial: 15, none: 5 }[insurance];
+    score += { long: 25, medium: 15, short: 10 }[horizon];
+
+    let level, badge, title, desc;
+    if (score >= 80) {
+      level = 'good'; badge = 'Strong foundation';
+      title = 'You are ready to invest for the long term';
+      desc = 'You have an emergency fund and insurance in place. A goal-based SIP plan is a sensible next step.';
+    } else if (score >= 55) {
+      level = 'ok'; badge = 'Good start';
+      title = 'A few gaps to close as you invest';
+      desc = 'You can start investing, but it is worth building a full 6-month emergency fund and checking your insurance cover alongside.';
+    } else {
+      level = 'low'; badge = 'Build the base first';
+      title = 'Start with safety, then grow';
+      desc = 'Before investing in equity, focus on an emergency fund (liquid funds can help) and basic term and health insurance.';
+    }
+    if (horizon === 'short') desc += ' With a 1–3 year time frame, lower-risk debt or hybrid funds are usually more suitable than pure equity.';
+
+    $('score-num').textContent = score;
+    $('score-ring').style.strokeDashoffset = 264 - (264 * score) / 100;
+    const badgeEl = $('score-badge');
+    badgeEl.textContent = badge;
+    badgeEl.className = 'badge ' + level;
+    $('quiz-title').textContent = title;
+    $('quiz-desc').textContent = desc;
+    $('quiz-wa').href = waLink(`Hi Parthasarathi, I took the readiness check on your website.\nScore: ${score}/100\nGoal: ${goalNames[goal]}\nI'd like to discuss a plan.`);
+
+    box.hidden = false;
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+}
+
+/* ---------- Booking form → WhatsApp ---------- */
+function initBookingForm() {
+  const form = $('booking-form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = $('book-name').value.trim();
+    const phone = $('book-phone').value.trim();
+    if (!name || !phone) return;
+    const msg = `Hello Parthasarathi,\n\nI'd like to book a free call.\n\nName: ${name}\nPhone: ${phone}\nInterested in: ${$('book-service').value}\nBest time: ${$('book-time').value}`;
+    window.open(waLink(msg), '_blank', 'noopener');
+    form.reset();
+  });
+}
+
+/* ---------- Scroll reveal ---------- */
+function initReveal() {
+  const targets = document.querySelectorAll('.section-head, .card, .steps, .steps li, .about-photo, .about-copy, .faq details, .contact-copy, .learn-tabs, .glossary, .safety, .link-card');
+  if (!('IntersectionObserver' in window)) return;
+  // Stagger items that sit side by side in a grid
+  targets.forEach(el => {
+    const siblings = [...el.parentElement.children].filter(c => c.matches('.card, li, details, .link-card'));
+    const i = siblings.indexOf(el);
+    if (i > 0) el.style.transitionDelay = (i % 6) * 70 + 'ms';
+  });
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
       }
     });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -40px 0px'
-  });
-
-  revealElements.forEach(el => observer.observe(el));
+  }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
+  targets.forEach(el => { el.classList.add('reveal'); observer.observe(el); });
 }
 
-/* --------------------------------------------------------------------------
-   0.2 ANIMATED COUNTER NUMBERS
-   -------------------------------------------------------------------------- */
-function initCounterNumbers() {
-  const counters = document.querySelectorAll('.counter-number');
-  
+/* ---------- Count-up stats ---------- */
+function initCounters() {
+  const items = document.querySelectorAll('[data-count]');
+  if (REDUCED_MOTION || !('IntersectionObserver' in window)) return;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-        entry.target.classList.add('counted');
-        animateSingleCounter(entry.target);
-      }
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const { count, prefix = '', suffix = '' } = el.dataset;
+      tweens.set(el, { value: 0 });
+      tweenNumber(el, +count, v => prefix + Math.round(v) + suffix, 1600);
+      observer.unobserve(el);
     });
-  }, { threshold: 0.5 });
-
-  counters.forEach(c => observer.observe(c));
+  }, { threshold: 0.6 });
+  items.forEach(el => observer.observe(el));
 }
 
-function animateSingleCounter(counterEl) {
-  const target = parseInt(counterEl.getAttribute('data-target'));
-  const prefix = counterEl.getAttribute('data-prefix') || '';
-  const suffix = counterEl.getAttribute('data-suffix') || '';
-  let count = 0;
-  const duration = 1500;
-  const stepTime = Math.abs(Math.floor(duration / target));
-
-  const timer = setInterval(() => {
-    count += Math.ceil(target / 40);
-    if (count >= target) {
-      count = target;
-      clearInterval(timer);
-    }
-    counterEl.textContent = `${prefix}${count}${suffix}`;
-  }, stepTime || 30);
-}
-
-
-
-/* --------------------------------------------------------------------------
-   2. FINANCIAL CALCULATORS ENGINE (SIP, LUMPSUM, GOAL PLANNER)
-   -------------------------------------------------------------------------- */
-let activeCalcMode = 'sip';
-let sipChart = null;
-
-function initCalculators() {
-  const calcTabs = document.querySelectorAll('.calc-tab-btn');
-  calcTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      calcTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      activeCalcMode = tab.getAttribute('data-calc');
-      updateCalculatorView();
-    });
-  });
-
-  // Range Sliders & Inputs Event Listeners
-  const sliders = ['calc-amount', 'calc-rate', 'calc-years', 'calc-stepup'];
-  sliders.forEach(id => {
-    const input = document.getElementById(id);
-    if (input) {
-      input.addEventListener('input', calculateFinancials);
-    }
-  });
-
-  const inflationCheck = document.getElementById('calc-inflation');
-  if (inflationCheck) {
-    inflationCheck.addEventListener('change', calculateFinancials);
-  }
-
-  // Initial Calculation
-  calculateFinancials();
-}
-
-function updateCalculatorView() {
-  const labelAmount = document.getElementById('label-amount');
-  const amountInput = document.getElementById('calc-amount');
-  
-  if (activeCalcMode === 'sip') {
-    labelAmount.textContent = 'Monthly SIP Investment (₹)';
-    amountInput.min = 500;
-    amountInput.max = 100000;
-    amountInput.step = 500;
-    amountInput.value = 10000;
-  } else if (activeCalcMode === 'lumpsum') {
-    labelAmount.textContent = 'One-Time Lumpsum Amount (₹)';
-    amountInput.min = 5000;
-    amountInput.max = 2000000;
-    amountInput.step = 5000;
-    amountInput.value = 100000;
-  } else if (activeCalcMode === 'goal') {
-    labelAmount.textContent = 'Target Goal Wealth (₹)';
-    amountInput.min = 100000;
-    amountInput.max = 50000000;
-    amountInput.step = 100000;
-    amountInput.value = 5000000;
-  } else if (activeCalcMode === 'retirement') {
-    labelAmount.textContent = 'Current Monthly Household Expense (₹)';
-    amountInput.min = 10000;
-    amountInput.max = 500000;
-    amountInput.step = 5000;
-    amountInput.value = 40000;
-  } else if (activeCalcMode === 'education') {
-    labelAmount.textContent = 'Current Cost of Desired Degree (₹)';
-    amountInput.min = 200000;
-    amountInput.max = 10000000;
-    amountInput.step = 100000;
-    amountInput.value = 1500000;
-  }
-
-  calculateFinancials();
-}
-
-function calculateFinancials() {
-  const amount = parseFloat(document.getElementById('calc-amount').value);
-  const rate = parseFloat(document.getElementById('calc-rate').value);
-  const years = parseFloat(document.getElementById('calc-years').value);
-  const stepUpEl = document.getElementById('calc-stepup');
-  const stepUpRate = stepUpEl ? parseFloat(stepUpEl.value) : 0;
-  const isInflation = document.getElementById('calc-inflation')?.checked || false;
-
-  const badgeStepUp = document.getElementById('badge-stepup');
-  if (badgeStepUp) badgeStepUp.textContent = stepUpRate + '% p.a.';
-
-  document.getElementById('badge-amount').textContent = formatCurrency(amount);
-  document.getElementById('badge-rate').textContent = rate + '%';
-  document.getElementById('badge-years').textContent = years + (years === 1 ? ' Year' : ' Years');
-
-  const stepUpGroup = document.getElementById('stepup-group');
-  if (stepUpGroup) {
-    stepUpGroup.style.display = activeCalcMode === 'sip' ? 'block' : 'none';
-  }
-
-  let investedTotal = 0;
-  let totalFutureValue = 0;
-  let estimatedReturns = 0;
-  let stepUpDiff = 0;
-
-  if (activeCalcMode === 'sip') {
-    const monthlyRate = rate / 12 / 100;
-    const months = years * 12;
-
-    const normalInvested = amount * months;
-    const normalFV = amount * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
-
-    if (stepUpRate > 0) {
-      let currentMonthly = amount;
-      let cumulativeFV = 0;
-      let cumulativeInvested = 0;
-
-      for (let y = 0; y < years; y++) {
-        for (let m = 0; m < 12; m++) {
-          const monthsRemaining = months - (y * 12 + m);
-          cumulativeFV += currentMonthly * Math.pow(1 + monthlyRate, monthsRemaining);
-          cumulativeInvested += currentMonthly;
-        }
-        currentMonthly = currentMonthly * (1 + stepUpRate / 100);
-      }
-
-      investedTotal = cumulativeInvested;
-      totalFutureValue = cumulativeFV;
-      stepUpDiff = totalFutureValue - normalFV;
-    } else {
-      investedTotal = normalInvested;
-      totalFutureValue = normalFV;
-    }
-
-    estimatedReturns = totalFutureValue - investedTotal;
-  } else if (activeCalcMode === 'lumpsum') {
-    investedTotal = amount;
-    totalFutureValue = amount * Math.pow(1 + (rate / 100), years);
-    estimatedReturns = totalFutureValue - investedTotal;
-  } else if (activeCalcMode === 'goal') {
-    const targetGoal = amount;
-    const monthlyRate = rate / 12 / 100;
-    const months = years * 12;
-    const requiredMonthly = targetGoal / (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate));
-    investedTotal = requiredMonthly * months;
-    totalFutureValue = targetGoal;
-    estimatedReturns = totalFutureValue - investedTotal;
-
-    document.getElementById('metric-invested-label').textContent = 'Required Monthly SIP';
-    document.getElementById('metric-invested-val').textContent = formatCurrency(Math.round(requiredMonthly));
-    document.getElementById('metric-returns-val').textContent = formatCurrency(Math.round(estimatedReturns));
-    document.getElementById('metric-total-label').textContent = 'Target Goal Corpus';
-    document.getElementById('metric-total-val').textContent = formatCurrency(Math.round(totalFutureValue));
-    
-    const diffEl = document.getElementById('metric-stepup-diff');
-    if (diffEl) diffEl.style.display = 'none';
-
-    renderCalcChart(investedTotal, estimatedReturns);
-    return;
-  } else if (activeCalcMode === 'retirement') {
-    const monthlyExpense = amount;
-    const futureMonthlyExpense = monthlyExpense * Math.pow(1 + 0.06, years); // 6% annual inflation
-    const corpusNeeded = futureMonthlyExpense * 12 * 25; // 25 years SWP corpus
-    const monthlyRate = rate / 12 / 100;
-    const months = years * 12;
-    const requiredSIP = corpusNeeded / (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate));
-
-    investedTotal = requiredSIP * months;
-    totalFutureValue = corpusNeeded;
-    estimatedReturns = corpusNeeded - investedTotal;
-
-    document.getElementById('metric-invested-label').textContent = 'Required Monthly SIP Today';
-    document.getElementById('metric-invested-val').textContent = formatCurrency(Math.round(requiredSIP));
-    document.getElementById('metric-returns-val').textContent = formatCurrency(Math.round(futureMonthlyExpense)) + ' /mo';
-    document.getElementById('metric-total-label').textContent = 'Target Retirement SWP Corpus';
-    document.getElementById('metric-total-val').textContent = formatCurrency(Math.round(corpusNeeded));
-    
-    const diffEl = document.getElementById('metric-stepup-diff');
-    if (diffEl) {
-      diffEl.style.display = 'block';
-      diffEl.innerHTML = `<i class="bi bi-shield-check"></i> Inflated Monthly Expense at Retirement: <strong>${formatCurrency(Math.round(futureMonthlyExpense))}/month</strong>`;
-    }
-
-    renderCalcChart(investedTotal, estimatedReturns);
-    return;
-  } else if (activeCalcMode === 'education') {
-    const currentDegreeCost = amount;
-    const futureDegreeCost = currentDegreeCost * Math.pow(1 + 0.08, years); // 8% education inflation
-    const monthlyRate = rate / 12 / 100;
-    const months = years * 12;
-    const requiredSIP = futureDegreeCost / (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate));
-
-    investedTotal = requiredSIP * months;
-    totalFutureValue = futureDegreeCost;
-    estimatedReturns = futureDegreeCost - investedTotal;
-
-    document.getElementById('metric-invested-label').textContent = 'Required Monthly SIP Today';
-    document.getElementById('metric-invested-val').textContent = formatCurrency(Math.round(requiredSIP));
-    document.getElementById('metric-returns-val').textContent = formatCurrency(Math.round(futureDegreeCost));
-    document.getElementById('metric-total-label').textContent = 'Future Education Fund Required';
-    document.getElementById('metric-total-val').textContent = formatCurrency(Math.round(futureDegreeCost));
-    
-    const diffEl = document.getElementById('metric-stepup-diff');
-    if (diffEl) {
-      diffEl.style.display = 'block';
-      diffEl.innerHTML = `<i class="bi bi-mortarboard-fill"></i> Adjusted for Education Inflation (@8% p.a.)`;
-    }
-
-    renderCalcChart(investedTotal, estimatedReturns);
-    return;
-  }
-
-  // Adjust for inflation if checked (6% p.a.)
-  let displayFV = totalFutureValue;
-  if (isInflation) {
-    displayFV = totalFutureValue / Math.pow(1 + 0.06, years);
-    document.getElementById('metric-total-label').textContent = 'Purchasing Power (Inflation Adjusted @ 6%)';
-  } else {
-    document.getElementById('metric-total-label').textContent = 'Expected Future Corpus Value';
-  }
-
-  document.getElementById('metric-invested-label').textContent = 'Total Invested Amount';
-  document.getElementById('metric-invested-val').textContent = formatCurrency(Math.round(investedTotal));
-  document.getElementById('metric-returns-val').textContent = formatCurrency(Math.round(estimatedReturns));
-  document.getElementById('metric-total-val').textContent = formatCurrency(Math.round(displayFV));
-
-  const diffEl = document.getElementById('metric-stepup-diff');
-  if (diffEl) {
-    if (activeCalcMode === 'sip' && stepUpRate > 0) {
-      diffEl.style.display = 'block';
-      diffEl.innerHTML = `<i class="bi bi-lightning-fill"></i> ${stepUpRate}% Step-Up adds +${formatCurrency(Math.round(stepUpDiff))} Extra Wealth!`;
-    } else {
-      diffEl.style.display = 'none';
-    }
-  }
-
-  renderCalcChart(investedTotal, estimatedReturns);
-}
-
-function renderCalcChart(invested, returns) {
-  const ctx = document.getElementById('calcChart');
-  if (!ctx) return;
-
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  const borderColor = isDark ? '#0f1424' : '#ffffff';
-
-  if (sipChart) {
-    sipChart.data.datasets[0].data = [Math.round(invested), Math.round(returns)];
-    sipChart.update();
-    return;
-  }
-
-  sipChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Invested Principal', 'Estimated Gain'],
-      datasets: [{
-        data: [Math.round(invested), Math.round(returns)],
-        backgroundColor: ['#a855f7', '#10b981'],
-        borderColor: borderColor,
-        borderWidth: 3,
-        hoverOffset: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {
-            color: isDark ? '#a1a1aa' : '#334155',
-            font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' }
-          }
-        },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              return context.label + ': ' + formatCurrency(context.raw);
-            }
-          }
-        }
-      },
-      cutout: '72%'
-    }
-  });
-}
-
-function initHeroPreviewChart() {
-  const ctx = document.getElementById('heroChart');
-  if (!ctx) return;
-
-  window.heroChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'],
-      datasets: [
-        {
-          label: 'SIP Portfolio Growth',
-          data: [100000, 240000, 420000, 680000, 1050000, 1520000, 2180000],
-          borderColor: '#10b981',
-          borderWidth: 3,
-          tension: 0.4,
-          fill: true,
-          backgroundColor: 'rgba(16, 185, 129, 0.12)',
-          pointBackgroundColor: '#10b981',
-          pointRadius: 4
-        },
-        {
-          label: 'Traditional Bank Savings',
-          data: [100000, 105000, 111000, 117000, 123000, 130000, 137000],
-          borderColor: '#71717a',
-          borderWidth: 2,
-          borderDash: [5, 5],
-          tension: 0.1,
-          pointRadius: 0
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: '#71717a' } },
-        y: { display: false }
-      }
-    }
-  });
-}
-
-/* --------------------------------------------------------------------------
-   2.1 FINANCIAL HEALTH SCORECARD & AMC ECOSYSTEM HANDLERS
-   -------------------------------------------------------------------------- */
-function initQuizScorecard() {
-  const btn = document.getElementById('get-quiz-result-btn');
-  const resultBox = document.getElementById('quiz-result-box');
-  if (!btn || !resultBox) return;
-
-  btn.addEventListener('click', () => {
-    const goal = document.querySelector('input[name="goal"]:checked')?.value || 'wealth';
-    const emergency = document.querySelector('input[name="emergency"]:checked')?.value || 'high';
-    const insurance = document.querySelector('input[name="insurance"]:checked')?.value || 'full';
-    const horizon = document.querySelector('input[name="horizon"]:checked')?.value || 'long';
-
-    let score = 0;
-    score += 15; // Goal defined
-    if (emergency === 'high') score += 30;
-    else if (emergency === 'med') score += 15;
-    else score += 5;
-
-    if (insurance === 'full') score += 30;
-    else if (insurance === 'partial') score += 15;
-    else score += 5;
-
-    if (horizon === 'long') score += 25;
-    else if (horizon === 'medium') score += 15;
-    else score += 10;
-
-    if (score > 100) score = 100;
-
-    const scoreNum = document.getElementById('score-num');
-    const scoreBadge = document.getElementById('score-badge');
-    const ringFill = document.getElementById('score-ring-fill');
-    const titleEl = document.getElementById('quiz-result-title');
-    const descEl = document.getElementById('quiz-result-desc');
-    const waBtn = document.getElementById('quiz-wa-btn');
-
-    if (scoreNum) scoreNum.textContent = score;
-
-    if (ringFill) {
-      const offset = 264 - (264 * score / 100);
-      ringFill.style.strokeDashoffset = offset;
-    }
-
-    let eqPct = 70, flexPct = 20, debtPct = 10;
-    let categoryTitle = 'Aggressive Growth Portfolio';
-    let statusText = 'Excellent Financial Health! You have strong emergency reserves and risk protection. Ready to build long-term equity wealth.';
-    let badgeText = 'Financial Health: Excellent 🚀';
-    let badgeBg = 'rgba(16, 185, 129, 0.2)';
-    let badgeColor = 'var(--secondary)';
-
-    if (score < 55) {
-      eqPct = 40; flexPct = 20; debtPct = 40;
-      categoryTitle = 'Capital Protection & Balanced Growth';
-      statusText = 'Needs Safety Shield! We recommend strengthening your Emergency Liquid Reserve & Basic Term Insurance before expanding aggressive equity.';
-      badgeText = 'Financial Health: Needs Shield 🛡️';
-      badgeBg = 'rgba(244, 63, 94, 0.2)';
-      badgeColor = 'var(--accent-rose)';
-    } else if (score < 80) {
-      eqPct = 60; flexPct = 25; debtPct = 15;
-      categoryTitle = 'Balanced Wealth Compounding Portfolio';
-      statusText = 'Solid Foundation! You have moderate savings and emergency buffers. Ideal for balanced equity and ELSS wealth building.';
-      badgeText = 'Financial Health: Good ⚖️';
-      badgeBg = 'rgba(251, 191, 36, 0.2)';
-      badgeColor = 'var(--accent-amber)';
-    }
-
-    if (scoreBadge) {
-      scoreBadge.textContent = badgeText;
-      scoreBadge.style.background = badgeBg;
-      scoreBadge.style.color = badgeColor;
-    }
-    if (titleEl) titleEl.textContent = `Recommended Strategy: ${categoryTitle}`;
-    if (descEl) descEl.textContent = statusText;
-
-    const eqVal = document.getElementById('quiz-eq-val');
-    const eqBar = document.getElementById('quiz-eq-bar');
-    const flexVal = document.getElementById('quiz-flex-val');
-    const flexBar = document.getElementById('quiz-flex-bar');
-    const debtVal = document.getElementById('quiz-debt-val');
-    const debtBar = document.getElementById('quiz-debt-bar');
-
-    if (eqVal) eqVal.textContent = eqPct + '%';
-    if (eqBar) eqBar.style.width = eqPct + '%';
-    if (flexVal) flexVal.textContent = flexPct + '%';
-    if (flexBar) flexBar.style.width = flexPct + '%';
-    if (debtVal) debtVal.textContent = debtPct + '%';
-    if (debtBar) debtBar.style.width = debtPct + '%';
-
-    if (waBtn) {
-      const waMsg = `Hi Parthasarathi, I completed the Financial Health Scorecard on your website!\nScore: ${score}/100\nCategory: ${categoryTitle}\nI would like to discuss my custom Mutual Fund strategy.`;
-      waBtn.href = `https://wa.me/917609952853?text=${encodeURIComponent(waMsg)}`;
-    }
-
-    resultBox.style.display = 'block';
-    resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-}
-
-
-
-function initFlipCards() {
-  const flipCards = document.querySelectorAll('.flip-card');
-  flipCards.forEach(card => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('flipped');
-    });
-  });
-}
-
-/* --------------------------------------------------------------------------
-   3. CLIENT TESTIMONIALS & WRITE-A-REVIEW SYSTEM
-   -------------------------------------------------------------------------- */
-const defaultReviews = [
-  {
-    name: 'Rajesh Sharma',
-    goal: 'Retirement Wealth & Freedom',
-    rating: 5,
-    text: 'Parthasarathi guided me to start a disciplined monthly SIP 6 years ago. My portfolio has grown beyond my expectations. Honest, transparent, and always accessible!'
-  },
-  {
-    name: 'Ananya Roy',
-    goal: "Child's Higher Education Fund",
-    rating: 5,
-    text: 'Extremely knowledgeable Mutual Fund Distributor. He mapped out an ELSS & Equity SIP plan that fits my monthly budget perfectly. Highly recommended!'
-  },
-  {
-    name: 'Vikram & Meera Patel',
-    goal: 'Dream Home Purchase Fund',
-    rating: 5,
-    text: 'The portfolio review service was an eye-opener. He helped me consolidate fragmented holdings into high-performing funds. Great personalized guidance.'
-  }
-];
-
-async function initTestimonialsManager() {
-  await renderReviews();
-
-  // Review Form Rating Star Selector
-  let selectedRating = 5;
-  const stars = document.querySelectorAll('#star-selector i');
-  stars.forEach(star => {
-    star.addEventListener('click', () => {
-      selectedRating = parseInt(star.getAttribute('data-star'));
-      stars.forEach((s, idx) => {
-        if (idx < selectedRating) {
-          s.classList.add('selected');
-        } else {
-          s.classList.remove('selected');
-        }
-      });
-    });
-  });
-
-  // Handle Review Submission
-  const reviewForm = document.getElementById('review-form');
-  if (reviewForm) {
-    reviewForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('review-name').value.trim();
-      const goal = document.getElementById('review-goal').value.trim();
-      const text = document.getElementById('review-text').value.trim();
-
-      if (!name || !text) return;
-
-      const newReview = { name, goal: goal || 'Wealth Creation', rating: selectedRating, text };
-      await saveUserReview(newReview);
-      await renderReviews();
-      closeModal('review-modal');
-      reviewForm.reset();
-      alert('Thank you! Your review has been published permanently on the website.');
-    });
-  }
-}
-
-async function getStoredReviews() {
-  try {
-    const res = await fetch('/api/reviews');
-    if (res.ok) {
-      const serverData = await res.json();
-      if (Array.isArray(serverData) && serverData.length > 0) {
-        localStorage.setItem('mfd_client_reviews', JSON.stringify(serverData));
-        return serverData;
-      }
-    }
-  } catch (e) {
-    console.log('Server review fetch fallback');
-  }
-
-  const localData = localStorage.getItem('mfd_client_reviews');
-  if (!localData) return defaultReviews;
-  try {
-    return JSON.parse(localData);
-  } catch (e) {
-    return defaultReviews;
-  }
-}
-
-async function saveUserReview(review) {
-  // Update local cache immediately
-  const localData = localStorage.getItem('mfd_client_reviews');
-  let reviews = [];
-  try {
-    reviews = localData ? JSON.parse(localData) : [...defaultReviews];
-  } catch(e) {
-    reviews = [...defaultReviews];
-  }
-  reviews.unshift(review);
-  localStorage.setItem('mfd_client_reviews', JSON.stringify(reviews));
-
-  // Sync to backend file reviews.json
-  try {
-    await fetch('/api/reviews', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(review)
-    });
-  } catch(e) {
-    console.log('Server review sync fallback');
-  }
-}
-
-async function renderReviews() {
-  const container = document.getElementById('testimonials-container');
-  if (!container) return;
-
-  const reviews = await getStoredReviews();
-  container.innerHTML = reviews.map(r => `
-    <div class="glass-card testimonial-card">
-      <div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <div class="rating-stars" style="color: #fbbf24;">
-            ${'<i class="bi bi-star-fill"></i>'.repeat(r.rating || 5)}
-          </div>
-          <span class="badge" style="background: rgba(0,230,118,0.12); color: var(--secondary); font-size: 0.72rem; padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(0,230,118,0.25);">
-            <i class="bi bi-patch-check-fill"></i> Verified Client
-          </span>
-        </div>
-        <p class="review-text" style="font-size: 0.93rem; line-height: 1.6; color: var(--text-main);">"${escapeHtml(r.text)}"</p>
-      </div>
-      <div class="client-profile" style="margin-top: 16px; border-top: 1px solid var(--glass-border); padding-top: 12px;">
-        <div class="client-avatar" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); font-weight: 700; border: 2px solid rgba(255,255,255,0.2);">${escapeHtml((r.name || 'C').charAt(0).toUpperCase())}</div>
-        <div class="client-info">
-          <h4 style="font-size: 0.98rem; font-weight: 700; color: var(--text-main);">${escapeHtml(r.name || 'Valued Client')}</h4>
-          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;"><i class="bi bi-bullseye" style="color: var(--secondary);"></i> ${escapeHtml(r.goal || 'Wealth Creation')}</p>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-/* --------------------------------------------------------------------------
-   4. MODAL DIALOG HANDLERS (APPOINTMENT & REVIEW)
-   -------------------------------------------------------------------------- */
-function initModalHandlers() {
-  // Open Review Modal
-  const openReviewBtn = document.getElementById('open-review-modal-btn');
-  if (openReviewBtn) {
-    openReviewBtn.addEventListener('click', () => openModal('review-modal'));
-  }
-
-  // Open Appointment Booking Modal
-  const bookingBtns = document.querySelectorAll('.open-booking-modal-btn');
-  bookingBtns.forEach(btn => {
-    btn.addEventListener('click', () => openModal('booking-modal'));
-  });
-
-  // Close Buttons
-  const closeBtns = document.querySelectorAll('.modal-close-btn');
-  closeBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const modal = btn.closest('.modal-overlay');
-      if (modal) closeModal(modal.id);
-    });
-  });
-
-  // Close on Backdrop Click
-  const modals = document.querySelectorAll('.modal-overlay');
-  modals.forEach(modal => {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal(modal.id);
-    });
-  });
-
-  // Handle Appointment Booking Submit
-  const bookingForm = document.getElementById('booking-form');
-  if (bookingForm) {
-    bookingForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('book-name').value.trim();
-      const phone = document.getElementById('book-phone').value.trim();
-      const service = document.getElementById('book-service').value;
-      const timeEl = document.getElementById('book-time');
-      const timeSlot = timeEl ? timeEl.value : 'Anytime Today';
-
-      if (!name || !phone) return;
-
-      // Pre-fill WhatsApp message
-      const msg = `Hello Parthasarathi,\n\nI would like to book a Free Advisory Consultation.\n\n👤 *Name*: ${name}\n📞 *Phone*: ${phone}\n🎯 *Service*: ${service}\n⏰ *Preferred Time*: ${timeSlot}\n\nLooking forward to speaking with you!`;
-      const waUrl = `https://wa.me/917609952853?text=${encodeURIComponent(msg)}`;
-      
-      closeModal('booking-modal');
-      bookingForm.reset();
-      window.open(waUrl, '_blank');
-    });
-  }
-}
-
-function openModal(id) {
-  const modal = document.getElementById(id);
-  if (modal) modal.classList.add('active');
-}
-
-function closeModal(id) {
-  const modal = document.getElementById(id);
-  if (modal) modal.classList.remove('active');
-}
-
-/* --------------------------------------------------------------------------
-   5. FAQ ACCORDION HANDLER
-   -------------------------------------------------------------------------- */
-function initFaqAccordion() {
-  const faqQuestions = document.querySelectorAll('.faq-question');
-  faqQuestions.forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.parentElement;
-      const isActive = item.classList.contains('active');
-      
-      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-      
-      if (!isActive) {
-        item.classList.add('active');
-      }
-    });
-  });
-}
-
-/* --------------------------------------------------------------------------
-   6. SCROLL & NAVIGATION HIGHLIGHT
-   -------------------------------------------------------------------------- */
-function initNavScroll() {
-  const sections = document.querySelectorAll('section[id]');
+/* ---------- Scroll progress bar & back-to-top ---------- */
+function initScrollUi() {
+  const bar = $('scroll-progress');
+  const toTop = $('to-top');
+  let ticking = false;
+  const update = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+    toTop.classList.toggle('show', scrollY > innerHeight);
+    ticking = false;
+  };
   window.addEventListener('scroll', () => {
-    const scrollY = window.pageYOffset;
-    
-    sections.forEach(current => {
-      const sectionHeight = current.offsetHeight;
-      const sectionTop = current.offsetTop - 100;
-      const sectionId = current.getAttribute('id');
-      
-      const navLink = document.querySelector(`.nav-link[href*="${sectionId}"]`);
-      const mobileNavItem = document.querySelector(`.mobile-nav-item[href*="${sectionId}"]`);
-      
-      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-        if (navLink) navLink.classList.add('active');
-        if (mobileNavItem) mobileNavItem.classList.add('active');
-      } else {
-        if (navLink) navLink.classList.remove('active');
-        if (mobileNavItem) mobileNavItem.classList.remove('active');
-      }
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+}
+
+/* ---------- Spotlight that follows the mouse on cards ---------- */
+function initSpotlight() {
+  if (!matchMedia('(hover: hover)').matches) return;
+  document.querySelectorAll('.card').forEach(card => {
+    card.classList.add('spot');
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', e.clientX - r.left + 'px');
+      card.style.setProperty('--my', e.clientY - r.top + 'px');
     });
+    card.addEventListener('pointerleave', () => card.style.setProperty('--my', '-100%'));
   });
 }
 
-/* --------------------------------------------------------------------------
-   6.1 MOBILE SLIDE-IN NAVIGATION DRAWER HANDLER
-   -------------------------------------------------------------------------- */
-function initMobileDrawer() {
-  const openBtn = document.getElementById('hamburger-menu-btn');
-  const overlay = document.getElementById('mobile-drawer-overlay');
-  const closeBtn = document.getElementById('mobile-drawer-close');
-  const drawerLinks = document.querySelectorAll('.drawer-link');
-  const drawerModalBtns = document.querySelectorAll('.mobile-drawer-content .open-booking-modal-btn');
-
-  if (!openBtn || !overlay) return;
-
-  function openDrawer() {
-    overlay.classList.add('active');
-    openBtn.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeDrawer() {
-    overlay.classList.remove('active');
-    openBtn.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-
-  openBtn.addEventListener('click', openDrawer);
-
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeDrawer);
-  }
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      closeDrawer();
-    }
+/* ---------- 3D tilt on the hero photo card ---------- */
+function initTilt() {
+  const card = $('hero-card');
+  if (REDUCED_MOTION || !matchMedia('(hover: hover) and (min-width: 861px)').matches) return;
+  const hero = $('top');
+  hero.addEventListener('pointermove', (e) => {
+    const r = card.getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width / 2)) / innerWidth;
+    const dy = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+    card.style.transform = `perspective(900px) rotateY(${dx * 10}deg) rotateX(${-dy * 10}deg)`;
   });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('active')) {
-      closeDrawer();
-    }
-  });
-
-  drawerLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      closeDrawer();
-    });
-  });
-
-  drawerModalBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      closeDrawer();
-    });
-  });
-}
-
-/* Helper Utilities */
-function formatCurrency(num) {
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    maximumFractionDigits: 0
-  }).format(num);
-}
-
-function escapeHtml(str) {
-  return str.replace(/[&<>'"]/g, 
-    tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-  );
+  hero.addEventListener('pointerleave', () => { card.style.transform = ''; });
 }
