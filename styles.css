@@ -601,12 +601,20 @@ html.loaded .preloader { opacity: 0; visibility: hidden; }
 .amc-track li:hover { border-color: rgba(201,162,74,.7); transform: translateY(-3px); }
 .amc-mark { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(145deg, var(--navy-700), var(--navy-900)); color: var(--gold-400); font: 700 16px/1 var(--serif); letter-spacing: .02em; box-shadow: inset 0 0 0 1px rgba(201,162,74,.35); }
 .amc-mark img { width: 100%; height: 100%; object-fit: contain; border-radius: inherit; background: #fff; padding: 4px; }
+.amc-track li.logo { justify-content: center; min-width: 190px; height: 88px; padding: 14px 26px; }
+.amc-track li.logo img { max-width: 170px; max-height: 56px; width: auto; height: auto; object-fit: contain; }
+.amc-track li.logo.wide img { max-width: 270px; max-height: 64px; } /* very wide logos (Nippon, Franklin, Sundaram) */
+.amc-track li.logo.wide img[src$="sundaram.svg"] { width: 270px; } /* this SVG has no width of its own, so it would shrink */
 .amc-name { font: 600 16px/1.2 var(--sans); color: var(--navy-800); }
 .amc-name small { display: block; margin-top: 3px; font-size: 12px; font-weight: 500; color: var(--ink-soft); }
 .amcs .fineprint { margin-top: 26px; }
 @media (max-width: 600px) {
   .amcs { padding: 56px 0 44px; }
   .amc-track li { padding: 10px 18px 10px 10px; }
+  .amc-track li.logo { min-width: 150px; height: 74px; padding: 12px 18px; }
+  .amc-track li.logo img { max-width: 140px; max-height: 46px; }
+  .amc-track li.logo.wide img { max-width: 210px; max-height: 50px; }
+  .amc-track li.logo.wide img[src$="sundaram.svg"] { width: 210px; }
   .amc-mark { width: 42px; height: 42px; font-size: 14px; }
   .amc-name { font-size: 15px; }
 }
