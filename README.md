@@ -1,1 +1,1 @@
-# parthasarathi-financial-services
+# Parthasarathi Panda – Mutual Fund Distributor
