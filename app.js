@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Parthasarathi Financial Services — site scripts
+   Parthasarathi Panda — site scripts
    ========================================================================== */
 
 const WA_NUMBER = '917609952853';
